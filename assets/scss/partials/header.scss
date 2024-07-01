@@ -1,14 +1,9 @@
 #header {
     // doks header-bar
-    @include doks-bar;
+    background-clip: padding-box; /* Prevent background from leaking into the border */
 
-    border-top: 10px solid;
-    border-image-source: linear-gradient(90deg, #0d6efd, #8ed6fb 50%, #d32e9d);
-    border-image-slice: 1;
-
-    -webkit-border-top: 10px solid;
-    -webkit-border-image-source: linear-gradient(90deg, #0d6efd, #8ed6fb 50%, #d32e9d);
-    -webkit-border-image-slice: 1;
+    /* Add pseudo-element */
+    overflow: hidden; /* Ensure pseudo-element doesn't overflow */
 
     z-index: 10;
     position: sticky;
@@ -102,5 +97,26 @@
                 display: none;
             }
         }
+    }
+}
+
+#header::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1; /* Place it behind the content */
+    height: 10px; /* Height of animated border */
+    background-image: linear-gradient(90deg, rgb(13, 110, 253), rgb(142, 214, 251) 50%, rgb(211, 46, 157));
+    background-size: 300% 100%; /* Extend the background to allow animation effect */
+    animation: slideGradient 3s infinite linear alternate;
+}
+
+@keyframes slideGradient {
+    0% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: 0 0;
     }
 }
