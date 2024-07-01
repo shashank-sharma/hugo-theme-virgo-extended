@@ -1,8 +1,79 @@
 .container-home {
-    // font-family: $font-family--some, $font-family--base;
+    font-family: $font-family--some, $font-family--base;
 
     // style of `content/_index.md`
     // some customizations of content of md
     .content-md {
+        padding-top: 24px;
+
+        p,
+        li,
+        td {
+            & > code {
+                color: $code-inline-color;
+            }
+        }
+
+        .highlight {
+
+            margin: 16px 0;
+            border-top: 2px solid $highlight-color;
+            border-bottom: 2px solid $highlight-color;
+            padding: 2px 0;
+            font-size: 0.14rem;
+            overflow: hidden;
+            &:hover {
+                overflow: auto;
+            }
+
+            pre {
+                padding-top: 0;
+            }
+        }
+
+        pre {
+            font-size: 0.14rem;
+            border-top: 1px solid $highlight-color;
+            border-bottom: 1px solid $highlight-color;
+
+            padding: 12px;
+            overflow: hidden;
+
+            &:hover {
+                overflow: auto;
+            }
+
+            .lang {
+                cursor: pointer;
+                margin-bottom: 16px;
+                padding: 4px 0px;
+                border-bottom: 1px dashed $gray-500;
+            }
+        }
+
+        em {
+            font-style: italic;
+        }
+    }
+
+    .content {
+        text-align: center;
+        .desc {
+            img {
+                max-width: 100%;
+            }
+
+            .words {
+                box-sizing: border-box;
+                font-size: .18rem;
+                color: $gray-500;
+                max-width: 600px;
+                // min-height: 269px;
+                padding: 48px 32px;
+                border-radius: 10px;
+                margin: 120px 0 160px;
+                background: $gray-white-400;
+            }
+        }
     }
 }

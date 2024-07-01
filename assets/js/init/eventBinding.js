@@ -25,4 +25,27 @@ export default function initEventBinding() {
 	// $('#sc-input').bind('input', search.search).bind('keypress', search.search);
 	// $('#sc-input').bind('input', search.search);
 	$('#sc-input').bind('keypress blur', localsearch.search);
+	// $(window).scroll(function() {
+	// 	let toc = $('.toc'),
+	// 	po = $('.toc .page-operation');
+	// 	let rel = $('.rel')
+
+	// 	if ($(this).scrollTop() > 600) {
+	// 		if ($(this).width() > 1400) {
+	// 			toc.css({ display: 'none' })
+	// 			po.css({ right: 'none' })
+	// 			rel.css({ display: 'none' })
+	// 		}
+	// 	} else {
+	// 		if ($(this).width() > 1400) {
+	// 		toc.css({ display: 'block' })
+    //     	po.css({ right: 'block' })
+	// 		rel.css({ display: 'block' })
+	// 		}
+	// 	}
+    // });
+
+	// $('.home-header-vector-background').css({ opacity: 1})
+	// $('.home-header-vector-body').css({ opacity: 1})
+	// $('.home-header-vector-body').css({ top: '10vmin'})
 }

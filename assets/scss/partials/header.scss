@@ -2,37 +2,88 @@
     // doks header-bar
     @include doks-bar;
 
-    z-index: 1000;
-    text-align: center;
+    border-top: 10px solid;
+    border-image-source: linear-gradient(90deg, #0d6efd, #8ed6fb 50%, #d32e9d);
+    border-image-slice: 1;
+
+    -webkit-border-top: 10px solid;
+    -webkit-border-image-source: linear-gradient(90deg, #0d6efd, #8ed6fb 50%, #d32e9d);
+    -webkit-border-image-slice: 1;
+
+    z-index: 10;
+    position: sticky;
+    padding: 0 $site-padding-lr;
+
+    .header-title {
+      font-size: 1.4em;
+    }
+
+    .home-container-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 40px;
+        .img-wrapper {
+            padding: 5px;
+            width: 100px;
+            box-sizing: border-box;
+            transition: 0.5s all ease;
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+        // 面包屑导航条
+        .container-breadcrumb-nav {
+            padding-bottom: 8px;
+
+            .breadcrumb-nav-bar {
+                display: flex;
+                font-size: 0.12rem;
+
+                a {
+                    white-space: break-spaces;
+                    overflow: hidden;
+
+                    display: block;
+                    color: rgba(90,41,228, .8);
+                    background: $gray-white-300;
+                    margin-right: 8px;
+                    padding: 4px 8px;
+                    border-radius: 0 12px 0 8px;
+                }
+
+                .active a {
+                    color: #5a29e4;
+                }
+            }
+        }
+
+        #toc {
+            display: none;
+        }
+    }
 
     .container-header {
         display: flex;
         justify-content: center;
         position: relative;
+        padding-top: 40px;
 
         .left {
-            .desc {
-                padding-top: 12px;
-                .img-wrapper {
-                    background: #000;
-                    border-radius: 50%;
-                    padding: 5px;
-                    width: 100px;
-                    height: 100px;
-                    box-sizing: border-box;
+            position: absolute;
+            left: 0;
+            .img-wrapper {
+                padding: 5px;
+                width: 100px;
+                box-sizing: border-box;
 
-                    transition: 0.5s all ease;
+                transition: 0.5s all ease;
 
-                    &:hover {
-                        box-shadow: 5px 0 6px #999;
-                        transform: translateX(-6%) rotate(360deg);
-                    }
-
-                    img {
-                        border-radius: 50%;
-                        max-width: 100%;
-                        height: auto;
-                    }
+                img {
+                    max-width: 100%;
+                    height: auto;
                 }
             }
         }
@@ -50,12 +101,6 @@
             #toc {
                 display: none;
             }
-        }
-    }
-
-    &.header-home {
-        .container-header .right {
-            max-width: 30%;
         }
     }
 }

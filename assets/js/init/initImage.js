@@ -13,11 +13,11 @@ export default function initImage() {
 		let src = $(item).attr('src');
 		// console.log(src);
 
-		if (!src.startsWith('http') && !src.startsWith('/')) {
-			// console.log('!!!!!!!!!');
-			// console.log(src);
-			$(item).attr('src', '/' + src);
-		}
+		// if (!src.startsWith('http') && !src.startsWith('/')) {
+		// 	// console.log('!!!!!!!!!');
+		// 	// console.log(src);
+		// 	$(item).attr('src', '/' + src);
+		// }
 
 		// 修复 ![xy|300](http://xxx.com/xx.jpg) 格式图片尺寸显示问题
 		let _alt = $(item).attr('alt') || '';

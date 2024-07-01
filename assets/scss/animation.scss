@@ -5,9 +5,19 @@ body.active-animate {
     // animation: slideInUp $animation-duration;
 	overflow-x: hidden;
 
-    #header, 
+    #header,
 	#content .container-main > div:not(.toc),
 	#footer {
         animation: headShake $animation-duration;
+    }
+
+    .container-home {
+      .menu .item {
+        animation: slideInDown 1s;
+      }
+
+      .content .desc {
+        animation: slideInUp 1s;
+      }
     }
 }

@@ -46,7 +46,7 @@ h2 {
     }
 
     &:before {
-        content: '♪² ';
+        content: '¶² ';
     }
 }
 
@@ -57,7 +57,7 @@ h3 {
     }
 
     &:before {
-        content: '♪³ ';
+        content: '¶³ ';
     }
 }
 
@@ -68,7 +68,7 @@ h4 {
     }
 
     &:before {
-        content: '♪⁴ ';
+        content: '¶⁴ ';
     }
 }
 
@@ -79,7 +79,7 @@ h5 {
     }
 
     &:before {
-        content: '♪⁵ ';
+        content: '¶⁵ ';
     }
 }
 
@@ -90,7 +90,7 @@ h6 {
     }
 
     &:before {
-        content: '♪⁶ ';
+        content: '¶⁶ ';
     }
 }
 
@@ -205,7 +205,7 @@ ol {
 }
 
 .some {
-    font-family: $font-family--some;
+    font-family: "Segoe";
 }
 
 .oh-essay {
@@ -239,3 +239,220 @@ ol {
     padding: 0 4px;
     border-radius: 4px;
 }
+
+aside {
+    background: #f8f9fa;
+    clear: right;
+    float: right;
+    font-size: .85rem;
+    margin: 25px -380px 25px 0;
+    max-width: 300px;
+    min-width: 300px;
+    padding: 0px 20px 10px 22px;
+    position: relative;
+    -webkit-user-select: none;
+    user-select: none;
+    z-index: 100
+
+    p {
+        font-size: 0.15rem;
+    }
+}
+
+aside.left {
+    clear: both;
+    float: left;
+    margin: 25px 25px 25px -380px;
+}
+
+.home-header-place {
+    position: relative;
+    height: 65vh;
+    width: 50%;
+    max-width: 1000px; /* Adjust this value to your needs */
+    margin: auto;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-header-vector-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 1; /* or use animation to fade in */
+    transition: all 2s ease-in-out;
+    z-index: -2; /* behind body */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-header-vector-body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 1; /* or use animation to fade in */
+    transition: all 1s ease-in-out;
+    z-index: -1; /* on top of background but behind images */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 1s ease-in-out;
+}
+
+.home-header-vector {
+    position: absolute;
+    will-change: transform; /* for smoother animations */
+    transition: all 2s ease-in-out;
+}
+
+@media (max-width: 1400px) {
+    aside {
+        float: none;
+        margin: 25px -300px 25px 0;
+        max-height: auto;
+        max-width: 100%;
+        overflow-y: auto;
+    }
+    aside.left {
+        display: block;
+        float: none;
+        margin: 25px 0;
+        max-height: auto;
+        max-width: 100%;
+    }
+    .home-header-place {
+        width: 70%;
+    }
+}
+
+.floating {
+    animation-name: float;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
+  
+  .floating-max {
+    animation-name: float-max;
+    animation-duration: 7s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
+  
+  .floating-min {
+    animation-name: float-min;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
+  
+  .floating-less {
+    animation-name: float-less;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+  }
+
+@-webkit-keyframes float{
+    0%, 50% {
+      -webkit-transform: translate(0, 0px);
+      transform: translate(0,  0px);
+      -webkit-animation-timing-function: cubic-bezier(.2,.25,.55,1);
+      animation-timing-function: cubic-bezier(.2,.25,.55,1)
+    }
+    25% {
+      -webkit-transform: translate(0, -12px);
+      transform: translate(0,  -12px);
+      -webkit-animation-timing-function: cubic-bezier(.45,0,.8,.75);
+      animation-timing-function: cubic-bezier(.45,0,.8,.75)
+    }
+    75% {
+      -webkit-transform: translate(0, 12px);
+      transform: translate(0, 12px);
+      -webkit-animation-timing-function: cubic-bezier(.45,0,.8,.75);
+      animation-timing-function: cubic-bezier(.45,0,.8,.75)
+    }
+    to {
+      -webkit-transform: translate(0, 0px);
+      transform: translate(0, 0px);
+    }
+  }
+  @-webkit-keyframes float-less{
+    0%, 50% {
+      -webkit-transform: translate(0, 0px);
+      transform: translate(0,  0px);
+      -webkit-animation-timing-function: cubic-bezier(.2,.25,.55,1);
+      animation-timing-function: cubic-bezier(.2,.25,.55,1)
+    }
+    25% {
+      -webkit-transform: translate(0, -7px);
+      transform: translate(0,  -7px);
+      -webkit-animation-timing-function: cubic-bezier(.45,0,.8,.75);
+      animation-timing-function: cubic-bezier(.45,0,.8,.75)
+    }
+    75% {
+      -webkit-transform: translate(0, 7px);
+      transform: translate(0, 7px);
+      -webkit-animation-timing-function: cubic-bezier(.45,0,.8,.75);
+      animation-timing-function: cubic-bezier(.45,0,.8,.75)
+    }
+    to {
+      -webkit-transform: translate(0, 0px);
+      transform: translate(0, 0px);
+    }
+  }
+  @-webkit-keyframes float-min{
+    0%, 50% {
+      -webkit-transform: translate(0, 0px);
+      transform: translate(0,  0px);
+      -webkit-animation-timing-function: cubic-bezier(.2,.25,.55,1);
+      animation-timing-function: cubic-bezier(.2,.25,.55,1)
+    }
+    25% {
+      -webkit-transform: translate(0, -5px);
+      transform: translate(0,  -9px);
+      -webkit-animation-timing-function: cubic-bezier(.45,0,.8,.75);
+      animation-timing-function: cubic-bezier(.45,0,.8,.75)
+    }
+    75% {
+      -webkit-transform: translate(0, 5px);
+      transform: translate(0, 9px);
+      -webkit-animation-timing-function: cubic-bezier(.45,0,.8,.75);
+      animation-timing-function: cubic-bezier(.45,0,.8,.75)
+    }
+    to {
+      -webkit-transform: translate(0, 0px);
+      transform: translate(0, 0px);
+    }
+  }
+  @-webkit-keyframes float-max{
+    0%, 50% {
+      -webkit-transform: translate(0, 0px);
+      transform: translate(0,  0px);
+      -webkit-animation-timing-function: cubic-bezier(.2,.25,.55,1);
+      animation-timing-function: cubic-bezier(.2,.25,.55,1)
+    }
+    25% {
+      -webkit-transform: translate(0, -15px);
+      transform: translate(0,  -9px);
+      -webkit-animation-timing-function: cubic-bezier(.45,0,.8,.75);
+      animation-timing-function: cubic-bezier(.45,0,.8,.75)
+    }
+    75% {
+      -webkit-transform: translate(0, 15px);
+      transform: translate(0, 15px);
+      -webkit-animation-timing-function: cubic-bezier(.45,0,.8,.75);
+      animation-timing-function: cubic-bezier(.45,0,.8,.75)
+    }
+    to {
+      -webkit-transform: translate(0, 0px);
+      transform: translate(0, 0px);
+    }
+  }

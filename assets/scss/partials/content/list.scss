@@ -11,6 +11,7 @@
         right: 16px;
         font-size: 0.14rem;
         overflow: scroll;
+        z-index: 11;
 
         // 滚动条宽度、颜色
         &::-webkit-scrollbar {

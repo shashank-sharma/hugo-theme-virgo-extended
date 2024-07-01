@@ -29,6 +29,10 @@
         #header {
             padding: 0 8px;
 
+            .home-container-header {
+                align-items: center;
+            }
+
             .container-header {
                 .left {
                     display: none;
@@ -68,7 +72,7 @@
         #content {
             padding: 0;
             .container-main {
-                overflow: hidden;
+                overflow: visible;
             }
 
             .container-home {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
     {{- partial "head.html" . -}}
     <body class="{{ with .Site.Params.hasActiveAnimate }}active-animate{{ end }} {{ with .Site.Params.hasActiveCool }}cool{{ end }}">
         {{ with .Site.Params.hasActiveFloatingBox }}{{- partial "floating-box.html" . -}}{{ end }}

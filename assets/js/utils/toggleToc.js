@@ -18,5 +18,4 @@ export default function toggleToc (e) {
         po.css({ right: '-300px' })
         $('body').unbind('click')
     }
-
 }

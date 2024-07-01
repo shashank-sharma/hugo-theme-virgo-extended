@@ -8,8 +8,8 @@ let moon = `<svg t="1695286075420" class="icon" viewBox="0 0 1024 1024" version=
     moon = `<svg t="1695287541521" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6596" width="16" height="16"><path d="M512 938.666667a426.666667 426.666667 0 0 1 0-853.333334 42.666667 42.666667 0 0 1 42.666667 42.666667 341.333333 341.333333 0 0 0 341.333333 341.333333 42.666667 42.666667 0 0 1 42.666667 42.666667 426.666667 426.666667 0 0 1-426.666667 426.666667z m-40.106667-765.44a341.333333 341.333333 0 1 0 378.88 378.88 426.666667 426.666667 0 0 1-378.88-378.88z" fill="#8a8a8a" p-id="6597"></path></svg>`
 let initColor = {
 	brightness: 100, 
-	contrast: 90,
-	sepia: 10,
+	contrast: 100,
+	sepia: 0,
 };
 
 // 初始化主题色（当前尚未设置 `dark` 本地存储）
@@ -30,6 +30,7 @@ if (getDarkOfLocalStorage() === 'on') {
     enable(initColor);
     
     $('#light-dark a').html(sun);
+    $("#header-logo").attr("src","/img/shashank-white.png");
 } else if (getDarkOfLocalStorage() === 'off') {
     disable();
 }
@@ -41,12 +42,15 @@ export default function toggleColor() {
         disable();
         setDarkOfLocalStorage('off');
         $('#light-dark a').html(moon);
+        console.log("Switch")
+        $("#header-logo").attr("src","/img/shashank.png");
 
     } else {
 
         enable(initColor);
         setDarkOfLocalStorage('on');
         $('#light-dark a').html(sun);
+        $("#header-logo").attr("src","/img/shashank-white.png");
     }
 }
 

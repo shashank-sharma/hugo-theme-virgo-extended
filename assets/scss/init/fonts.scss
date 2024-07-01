@@ -13,5 +13,10 @@
     src: url('fonts/ttfs/jinkai.ttf') format('TrueType');
 }
 
+@font-face {
+    font-family: "Segoe";
+    src: url('/fonts/segoescript.woff2') format('truetype');
+}
+
 @import 'fonts/lxgw-wenkai-screen-webfont/style.css';
 @import 'fonts/lxgw-wenkai-mono-webfont/style.css';

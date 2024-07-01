@@ -5,9 +5,9 @@
 
         <div class="list post-list">
             {{ if ne .Kind "taxonomy"}} 
-            <div class="count">文章列表： {{ len .Pages }} 篇</div>
+            <div class="count">Article list: {{ len .Pages }}</div>
             {{else}}
-            <div class="count">标签列表： {{ len .Pages }} 枚</div>
+            <div class="count">Tag list: {{ len .Pages }}</div>
             {{ end }}
             
             <!-- {{ range .Paginator.Pages.ByTitle }} -->
@@ -63,14 +63,6 @@
             
             {{ if .IsPage }}
                 {{- partial "partials/_ctgtag.html" . -}}
-                <div class="summary">{{ .Summary | markdownify  }}</div>
-				{{ if .Truncated }}
-				<!-- This <div> includes a read more link, but only if the summary is truncated... -->
-				<div class="read-more">
-                    <!-- 查看更多… ◿ «« -->
-				  <a href="{{ .RelPermalink }}">····</a>
-				</div>
-				{{ end }}
             {{ end }}
 
         </div>
