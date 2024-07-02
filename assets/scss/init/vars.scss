@@ -2,12 +2,10 @@ $font-family-sans-serif: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, 
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 $font-family-monospace: sfmono-regular, menlo, monaco, consolas, 'Liberation Mono', 'Courier New', monospace;
 
-$font-lxgw: 'LXGW WenKai Screen';
-$font-lxgw-mono: 'LXGW WenKai Mono';
 
-$font-family--base: $font-lxgw, 'kaiti', $font-family-sans-serif;
-$font-family--code: romanFont, $font-lxgw-mono, $font-lxgw, $font-family-monospace;
-$font-family--some: 'Segoe Script', $font-lxgw;
+$font-family--base: interFont, $font-family-sans-serif;
+$font-family--code: romanFont, $font-family-monospace;
+$font-family--some: 'Segoe Script';
 
 // bootstrap colos
 $white: #fff !default;

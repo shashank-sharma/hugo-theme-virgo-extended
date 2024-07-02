@@ -9,14 +9,48 @@
 }
 
 @font-face {
-    font-family: jinkaiFont;
-    src: url('fonts/ttfs/jinkai.ttf') format('TrueType');
+    font-family: 'interFont';
+    src: url('fonts/inter/Inter-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'interFont';
+    src: url('fonts/inter/Inter-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'interFont';
+    src: url('fonts/inter/Inter-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'interFont';
+    src: url('fonts/inter/Inter-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'interFont';
+    src: url('fonts/inter/Inter-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'interFont';
+    src: url('fonts/inter/Inter-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
 }
 
 @font-face {
     font-family: "Segoe";
     src: url('/fonts/segoescript.woff2') format('truetype');
 }
-
-@import 'fonts/lxgw-wenkai-screen-webfont/style.css';
-@import 'fonts/lxgw-wenkai-mono-webfont/style.css';
