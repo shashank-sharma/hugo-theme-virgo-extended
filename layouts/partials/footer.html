@@ -9,6 +9,9 @@
     <div class="info">
         <!-- <a href="https://github.com/loveminimal/hugo-theme-virgo">Copyright</a> © {{ .Site.Params.startDate }} - <span id="info-date"></span> -->
         {{ .Permalink }} {{ .Site.Params.version }}
+        {{- if .GitInfo -}}
+          {{- partial "gitinfo.html" . -}}
+        {{- end -}}
     </div>
 
 </div>
