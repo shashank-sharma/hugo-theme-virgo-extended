@@ -9,6 +9,9 @@ body {
     font-family: $font-family--base;
     font-size: 0.16rem;
     line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 li::marker {
@@ -311,6 +314,41 @@ aside.left {
     will-change: transform; /* for smoother animations */
     transition: all 2s ease-in-out;
 }
+
+.flex-main-body {
+    position: relative;
+    flex-direction: column;
+    flex-grow: 1;
+    display: flex;
+}
+
+@keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .background-gradient {
+    --size: 50vmin;
+    --speed: 50s;
+    --easing: cubic-bezier(0.8, 0.2, 0.2, 0.8);
+
+    width: var(--size);
+    height: var(--size);
+    filter: blur(calc(var(--size) / 5));
+    background-image: linear-gradient(hsl(259, 89%, 62%), hsl(167, 52%, 55%));
+    animation: rotate var(--speed) var(--easing) alternate infinite;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+
+  @media (min-width: 720px) {
+    .gradient {
+      --size: 500px;
+    }
+  }
 
 @media (max-width: 1400px) {
     aside {

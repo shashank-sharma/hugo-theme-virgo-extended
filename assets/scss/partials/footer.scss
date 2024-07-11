@@ -8,6 +8,9 @@
 
     .container-footer {
         clear: both;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         font-size: 0.14rem;
         .icp {
             a {
@@ -52,5 +55,17 @@
                 color: #939393;
             }
         }
+    }
+}
+
+@media (max-width: 768px) {
+    .container-footer {
+        flex-direction: column;
+        text-align: center;
+    }
+    .info.left, .info.center, .info.right {
+        /* full width and margin adjustments for small screens */
+        width: 100%;
+        margin-bottom: 10px;
     }
 }
