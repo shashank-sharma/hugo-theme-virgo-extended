@@ -47,7 +47,6 @@
 
             <!-- if eq .Kind "page" -->
             <a href="{{.Permalink}}" name="{{.Title}}" target="_self">
-                <span>{{ with .IsPage}} <img src="/imgs/icons/post-3.svg" width="16" /> {{else}} <img src="/imgs/icons/ctg.svg" width="16" /> {{end}}</span>
                 <span> {{.Title}} <sup>{{if not .IsPage}}{{len .Pages}}{{ end }}</sup></span>
             </a>
 

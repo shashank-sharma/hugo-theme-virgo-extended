@@ -46,29 +46,22 @@
     {{ if .Site.Params.isShowRelativePosts }}
     {{ if .Params.tags }}
     <div class="rel">
+        {{ $CurTitle := index .Params.Title }}
         {{ $CurTag := index .Params.tags 0 }}
         <!-- {{ $CurTag }} -->
-        {{ $CurTitle := .Title }}
-        <!-- {{ $CurTitle }} -->
-        {{ range .Site.Pages.ByTitle }}
-        {{ if and (eq .Type "tags") (ne .Title "Tags") (ne .Title "Secrets")}}
-        {{ if eq .Title $CurTag }}
+        {{ $CurCategory := index .Params.categories 0 }}
+        {{ range $categoryName, $category := .Site.Taxonomies.categories }}
+        {{ if eq $categoryName $CurCategory }}
         <div class="curtag-desc">
-            <a href="{{.Permalink}}"><img src="/imgs/icons/tag.svg" width="16" /> Related Articles：{{ .Title }} <sup>{{len
-                    .Pages}}</sup></a>
+            <a href=""><img src="/imgs/icons/tag.svg" width="16" /> Other Articles:</a>
         </div>
-
-        <div class="curtag-post">
-            {{ range .Pages.ByTitle }}
-            <!-- 适配 Obsidian 的 Templater 插件的 Front Matter -->
-            {{if (ne .Title "<% tp.file.title %>")}}
-                <div class="curtag-post-item {{ with eq $CurTitle .Title}}curtag-post-item--active{{ end }}">
-                    <a href="{{.Permalink}}">{{ .Title }}</a>
-                </div>
-                {{ end }}
-                {{ end }}
-        </div>
-        {{ end }}
+        <ul>
+            {{ range $category.Pages }}
+            {{if (ne .Title $CurTitle)}}
+            <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+            {{ end }}
+            {{ end }}
+        </ul>
         {{ end }}
         {{ end }}
     </div>

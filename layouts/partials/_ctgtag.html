@@ -2,6 +2,7 @@
 	<div class="taxonomy">
 		<div class="tag">
 			<!-- {{ with .Params.tags }} <img src="/imgs/icons/tag.svg" width="16" /> {{ end }} -->
+			<span class="category-tag">{{ index (.Params.Categories) 0 }}</span>
 			{{ range .Params.tags }}
 			<a href="/tags/{{ . | urlize }}">{{ . }}</a>
 			{{ end }}
