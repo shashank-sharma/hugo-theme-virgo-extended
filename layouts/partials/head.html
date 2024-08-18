@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ $style.Permalink }}">
     <!-- 传递配置参数 -->
     <script>const DARK = {{.Site.Params.dark}};</script>
-    {{ $built := resources.Get "main.js" | js.Build "main.js" }}
+    {{ $built := resources.Get "main.js" | js.Build (dict "params" (dict "params" .Site.Params)) }}
     <script type="text/javascript" src="{{ $built.RelPermalink }}" defer></script>
 
     {{ if not .Site.IsServer }}
