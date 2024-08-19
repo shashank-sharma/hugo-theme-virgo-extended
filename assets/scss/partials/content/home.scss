@@ -102,6 +102,7 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    margin-bottom: 0;
   }
   
   .holo-badge:hover {
@@ -110,7 +111,7 @@
   }
 
   .holo-badge.not-available {
-    opacity: 0.6;
+    opacity: 0.9;
     filter: grayscale(100%);
 }
 
@@ -251,8 +252,10 @@
   @media (max-width: 980px) {
     .device-container {
         position: relative;
-        flex-direction: row;
-        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
     }
 
     .holo-header {
@@ -262,8 +265,14 @@
     .holo-badge {
       width: 100%;
       max-width: 250px;
+      margin-bottom: -40px;
+      transition: all 0.3s ease, margin-bottom 0.3s ease;
       padding: 12px;
       border-radius: 12px;
+    }
+
+    .holo-badge:last-child {
+        margin-bottom: 0;
     }
   
     .holo-icon {

@@ -21,10 +21,37 @@ export default function initDeviceStatus(apiEndpoint) {
     `;
   
     function createDeviceElement() {
-      const template = document.createElement('template');
-      template.innerHTML = deviceTemplate.trim();
-      return template.content.firstChild;
-    }
+        const template = document.createElement('template');
+        template.innerHTML = deviceTemplate.trim();
+        const element = template.content.firstChild;
+    
+        element.addEventListener('click', function() {
+          if (window.innerWidth <= 980) {
+            const allBadges = document.querySelectorAll('.holo-badge');
+            const wasExpanded = this.classList.contains('expanded');
+    
+            // Toggle expanded state for clicked badge
+            this.classList.toggle('expanded');
+    
+            // Adjust margins for all badges
+            if (wasExpanded) {
+              // Collapse
+              allBadges.forEach(badge => {
+                badge.style.marginBottom = '-40px';
+                badge.classList.remove('expanded');
+              });
+            } else {
+              // Expand
+              allBadges.forEach(badge => {
+                badge.style.marginBottom = '0px';
+              });
+              this.classList.add('expanded');
+            }
+          }
+        });
+    
+        return element;
+      }
   
     function updateDeviceStatus(device, element) {
       element.querySelector('.holo-title').textContent = device.name;

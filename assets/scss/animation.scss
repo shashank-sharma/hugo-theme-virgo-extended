@@ -8,7 +8,7 @@ body.active-animate {
     #header,
 	#content .container-main > div:not(.toc),
 	#footer {
-        animation: headShake $animation-duration;
+        animation: none;
     }
 
     .container-home {
