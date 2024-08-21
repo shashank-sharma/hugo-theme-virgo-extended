@@ -8,7 +8,12 @@ import enhanceMarkdown from './js/init/enhanceMarkdown';
 import runMisc from './js/init/runMisc';
 import * as params from '@params';
 
-if (params.params.backend && params.params.backend.deviceapiendpoint) {
+function isHomePage() {
+    return window.location.pathname === '/' || window.location.pathname === '/index.html';
+}
+
+if (params.params.backend && params.params.backend.deviceapiendpoint && isHomePage()) {
+    console.log(params)
     home(params.params.backend.deviceapiendpoint)
 }
 greet();

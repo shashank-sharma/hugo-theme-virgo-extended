@@ -22,10 +22,28 @@
             padding: 5px;
             width: 100px;
             box-sizing: border-box;
-            transition: 0.5s all ease;
-            img {
+
+            .header-logo {
                 max-width: 100%;
                 height: auto;
+                pointer-events: auto;
+                transition: all .2s ease-in-out;
+            }
+
+            .header-logo.inverted {
+                filter: invert(100%);
+            }
+
+            .header-logo:hover {
+                filter: drop-shadow(3px 3px 0 rgb(134, 134, 134));
+            }
+
+            .header-logo.inverted:hover {
+                filter: invert(100%) drop-shadow(3px 3px 0 rgb(134, 134, 134));
+            }
+        
+            .header-logo:active {
+                transform: scale(1.2);
             }
         }
 
@@ -64,7 +82,6 @@
         display: flex;
         justify-content: center;
         position: relative;
-        padding-top: 40px;
 
         .left {
             position: absolute;

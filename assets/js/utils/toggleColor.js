@@ -12,45 +12,51 @@ let initColor = {
 	sepia: 0,
 };
 
-// 初始化主题色（当前尚未设置 `dark` 本地存储）
-// ❌ 废弃，默认设置亮色
-// if (!getDarkOfLocalStorage()) {
-//     enable(initColor);
-//     setDarkOfLocalStorage('on');
-// }
-// ✔️ 新的初始化颜色配置
-if (DARK && getDarkOfLocalStorage() !== 'off') {
+function isNightTime() {
+    const hour = new Date().getHours();
+    return hour >= 18 || hour < 6;
+}
+
+function setInitialColorMode() {
+    const storedPreference = getDarkOfLocalStorage();
+    if (storedPreference) {
+        if (storedPreference === 'on') {
+            enableDarkMode();
+        } else {
+            disableDarkMode();
+        }
+    } else {
+        if (isNightTime()) {
+            enableDarkMode();
+        } else {
+            disableDarkMode();
+        }
+    }
+}
+
+function enableDarkMode() {
+    enable(initColor);
+    $('#light-dark a').html(sun);
+    $("#header-logo").addClass('inverted');
     setDarkOfLocalStorage('on');
 }
 
-// 若存在本地存储，且状态：
-// 为 `on`  ，激活暗色模式，
-// 为 `off` ，激活亮色模式
-if (getDarkOfLocalStorage() === 'on') {
-    enable(initColor);
-    
-    $('#light-dark a').html(sun);
-    $("#header-logo").attr("src","/img/shashank-white.png");
-} else if (getDarkOfLocalStorage() === 'off') {
+function disableDarkMode() {
     disable();
+    $('#light-dark a').html(moon);
+    $("#header-logo").removeClass('inverted');
+    setDarkOfLocalStorage('off');
 }
+
+setInitialColorMode();
 
 export default function toggleColor() {
     let _isEnabled = isEnabled();
 
     if (_isEnabled) {
-        disable();
-        setDarkOfLocalStorage('off');
-        $('#light-dark a').html(moon);
-        console.log("Switch")
-        $("#header-logo").attr("src","/img/shashank.png");
-
+        disableDarkMode();
     } else {
-
-        enable(initColor);
-        setDarkOfLocalStorage('on');
-        $('#light-dark a').html(sun);
-        $("#header-logo").attr("src","/img/shashank-white.png");
+        enableDarkMode();
     }
 }
 
@@ -64,4 +70,9 @@ function setDarkOfLocalStorage(flag) {
 
 function delDarkOfLocalStorage() {
     localStorage.removeItem('dark');
+}
+
+// If DARK is a global variable indicating if dark mode should be enabled by default
+if (typeof DARK !== 'undefined' && DARK && getDarkOfLocalStorage() !== 'off') {
+    setDarkOfLocalStorage('on');
 }

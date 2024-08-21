@@ -98,7 +98,7 @@
     color: black;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 16px 0 rgba(31, 38, 135, 0.20);
+    box-shadow: 0 8px 16px 0 rgba(117, 120, 172, 0.40);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -144,7 +144,7 @@
       rgb(54, 103, 196) 301.88deg,
       rgb(105, 30, 255) 360deg
     );
-    opacity: 0.10;
+    opacity: 0.2;
     filter: blur(20px);
     animation: holo-glow-animate 15s linear infinite;
   }
