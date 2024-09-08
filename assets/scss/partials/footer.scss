@@ -1,61 +1,69 @@
 #footer {
+    flex-shrink: 0;
     background: $footer-bg-color;
-    position: relative;
-    padding: 16px 0 32px 0;
     padding: 16px $site-padding-lr 32px;
     margin-top: 64px;
     border-top: 1px solid #eee;
+}
 
-    .container-footer {
-        clear: both;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.14rem;
-        .icp {
-            a {
-                color: $link-color;
-            }
-        }
+.container-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.14rem;
+}
 
-        .beian {
-            margin: 0 auto;
-            padding: 20px 0 4px;
-            display: flex;
-            justify-content: center;
+.info {
+    color: #939393;
+    flex: 1;
+}
 
-            a {
-                display: inline-block;
-                text-decoration: none;
-                height: 20px;
-                line-height: 20px;
-                padding-right: 12px;
+.info a {
+    color: #939393;
+}
 
-                img {
-                    float: left;
-                }
+.info.left {
+    text-align: left;
+}
 
-                p {
-                    float: left;
-                    height: 20px;
-                    line-height: 20px;
-                    margin: 0px 0px 0px 5px;
-                    color: #939393;
-                }
+.info.center {
+    text-align: center;
+}
 
-                color: #939393;
-            }
-        }
+.info.right {
+    text-align: right;
+}
 
-        .info {
-            color: #939393;
-            text-align: center;
+.icp a {
+    color: $link-color;
+}
 
-            a {
-                color: #939393;
-            }
-        }
-    }
+.beian {
+    margin: 0 auto;
+    padding: 20px 0 4px;
+    display: flex;
+    justify-content: center;
+}
+
+.beian a {
+    display: inline-block;
+    text-decoration: none;
+    height: 20px;
+    line-height: 20px;
+    padding-right: 12px;
+    color: #939393;
+}
+
+.beian a img {
+    float: left;
+}
+
+.beian a p {
+    float: left;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 0 0 5px;
+    color: #939393;
 }
 
 @media (max-width: 768px) {
@@ -63,9 +71,10 @@
         flex-direction: column;
         text-align: center;
     }
+    
     .info.left, .info.center, .info.right {
-        /* full width and margin adjustments for small screens */
         width: 100%;
         margin-bottom: 10px;
+        text-align: center;
     }
 }

@@ -1,25 +1,26 @@
 <div class="container-footer">
-    <div class="info left">
-    </div>
-    <div class="info center">
-        © {{ .Site.Params.startDate }} - <span id="info-date"></span> {{ .Site.Title }}<br/>
-        {{ .Permalink }} {{ .Site.Params.version }}
-        {{- if .GitInfo -}}
-          {{- partial "gitinfo.html" . -}}
-        {{- end -}}
-    </div>
-    <div class="info right">
-        <a href="{{ absURL "posts/index.xml" }}">RSS</a>&nbsp;&nbsp;
-        <a href="{{ absURL "sitemap.xml" }}">Sitemap</a>&nbsp;&nbsp;
-        {{- $gitRepoUrl := "" -}}
-        {{- if (isset site.Params "git_info") -}}
-          {{- $git_host := site.Params.git_info.host -}}
-          {{- $git_user := site.Params.git_info.user -}}
-          {{- $git_repo := site.Params.git_info.repo -}}
-          {{ $gitRepoUrl = printf "https://%s.com/%s/%s" $git_host $git_user $git_repo }}
-        {{- end -}}
-        {{- if not (eq $gitRepoUrl "") }}
-          <a href="{{ $gitRepoUrl }}">Source</a>
-        {{- end }}
-    </div>
+  <div class="info left">
+      <!-- Left content -->
+  </div>
+  <div class="info center">
+      © {{ .Site.Params.startDate }} - <span id="info-date"></span> {{ .Site.Title }}<br/>
+      {{ .Permalink }} {{ .Site.Params.version }}
+      {{- if .GitInfo -}}
+        {{- partial "gitinfo.html" . -}}
+      {{- end -}}
+  </div>
+  <div class="info right">
+      <a href="{{ absURL "posts/index.xml" }}">RSS</a>&nbsp;&nbsp;
+      <a href="{{ absURL "sitemap.xml" }}">Sitemap</a>&nbsp;&nbsp;
+      {{- $gitRepoUrl := "" -}}
+      {{- if (isset site.Params "git_info") -}}
+        {{- $git_host := site.Params.git_info.host -}}
+        {{- $git_user := site.Params.git_info.user -}}
+        {{- $git_repo := site.Params.git_info.repo -}}
+        {{ $gitRepoUrl = printf "https://%s.com/%s/%s" $git_host $git_user $git_repo }}
+      {{- end -}}
+      {{- if not (eq $gitRepoUrl "") }}
+        <a href="{{ $gitRepoUrl }}">Source</a>
+      {{- end }}
+  </div>
 </div>
