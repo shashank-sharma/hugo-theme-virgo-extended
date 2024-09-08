@@ -48,7 +48,7 @@ function disableDarkMode() {
     setDarkOfLocalStorage('off');
 }
 
-setInitialColorMode();
+// setInitialColorMode();
 
 export default function toggleColor() {
     let _isEnabled = isEnabled();

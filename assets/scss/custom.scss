@@ -309,6 +309,10 @@ aside.left {
     transition: all 1s ease-in-out;
 }
 
+.home-header-vector-body video {
+    width: 100%;
+}
+
 .home-header-vector {
     position: absolute;
     will-change: transform; /* for smoother animations */

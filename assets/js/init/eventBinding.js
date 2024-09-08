@@ -13,7 +13,7 @@ import localsearch from "../utils/localsearch";
 export default function initEventBinding() {
 	$(window).bind('scroll', throttle(colorToc, 500));
 	$('#toc').bind('click', toggleToc);
-	$('#light-dark').bind('click', toggleColor);
+	// $('#light-dark').bind('click', toggleColor);
 	$('.content img').bind('click', viewImage);
 
 	// 快捷 ship 事件绑定
