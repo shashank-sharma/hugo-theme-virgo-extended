@@ -1,8 +1,16 @@
+.container-main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
 #footer {
     flex-shrink: 0;
     background: $footer-bg-color;
     padding: 16px $site-padding-lr 32px;
     margin-top: 64px;
+    z-index: 2;
+    position: relative;
     border-top: 1px solid #eee;
 }
 
