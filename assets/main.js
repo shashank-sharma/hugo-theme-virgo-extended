@@ -1,6 +1,7 @@
 import greet from "js/init/greet";
 import initEventBinding from "js/init/eventBinding";
 import home from "js/init/home";
+import homeVideo from "js/init/homeVideo";
 import initImage from "js/init/initImage";
 import initCodeBlock from "js/init/initCodeBlock";
 import enhanceOrgMode from './js/init/enhanceOrgMode';
@@ -16,6 +17,12 @@ if (params.params.backend && params.params.backend.deviceapiendpoint && isHomePa
     console.log(params)
     home(params.params.backend.deviceapiendpoint)
 }
+
+if (params.params.video.src && isHomePage) {
+    console.log("Rendering video");
+    homeVideo(params.params.video.src, "home-header-vector-body")
+}
+
 greet();
 enhanceOrgMode();
 initCodeBlock();
