@@ -10,6 +10,12 @@ export default function renderRandomVideo(videoSources, containerId) {
         return;
     }
 
+    const loadingScreen = document.getElementById('loading-screen');
+    if (!loadingScreen) {
+        console.error('Loading screen element not found');
+        return;
+    }
+
     container.style.position = 'relative';
     container.style.overflow = 'hidden';
 
@@ -52,7 +58,36 @@ export default function renderRandomVideo(videoSources, containerId) {
         }, 500);
     }
 
-    const initialVideo = createVideoElement(getNextVideo());
-    container.appendChild(initialVideo);
-    container.addEventListener('click', transitionToNewVideo);
+    function preloadVideos() {
+        return Promise.all(videoSources.map(src => {
+            return new Promise((resolve, reject) => {
+                const video = document.createElement('video');
+                video.preload = 'auto';
+                video.onloadeddata = () => resolve(video);
+                video.onerror = reject;
+                video.src = src;
+            });
+        }));
+    }
+
+    function hideLoadingScreen() {
+        setTimeout(() => {
+            loadingScreen.classList.add('closing');
+            setTimeout(() => {
+                loadingScreen.remove();
+            }, 1000);
+        }, 1000);
+    }
+
+    // Start preloading
+    preloadVideos().then(videos => {
+        preloadedVideos = videos;
+        hideLoadingScreen();
+        const initialVideo = createVideoElement(getNextVideo());
+        container.appendChild(initialVideo);
+        container.addEventListener('click', transitionToNewVideo);
+    }).catch(error => {
+        console.error('Error preloading videos:', error);
+        hideLoadingScreen();
+    });
 }
