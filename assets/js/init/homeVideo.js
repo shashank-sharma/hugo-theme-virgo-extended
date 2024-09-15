@@ -20,9 +20,13 @@ export default function renderRandomVideo(videoSources, containerId) {
     container.style.overflow = 'hidden';
 
     let currentIndex = Math.floor(Math.random() * videoSources.length);
+    if (localStorage.getItem("video_index") !== null) {
+        currentIndex = parseInt(localStorage.getItem("video_index"));
+    }
 
     function getNextVideo() {
         currentIndex = (currentIndex + 1) % videoSources.length;
+        localStorage.setItem("video_index", currentIndex);
         return videoSources[currentIndex];
     }
 
