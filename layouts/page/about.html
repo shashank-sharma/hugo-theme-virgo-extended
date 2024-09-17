@@ -1,0 +1,13 @@
+{{ define "main" }}
+<div class="container-about">
+    <div class="container-ship about-contact">
+        <div class="contact">
+            {{- partial "partials/_contact.html" . -}}
+        </div>
+    </div>
+    <div class="desc">
+        <div>{{ .Content }}</div>
+        <div><a href="/"></a></div>
+    </div>
+</div>
+{{ end }}

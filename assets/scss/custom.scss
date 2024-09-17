@@ -35,9 +35,19 @@ h6 {
     }
 }
 
+.h1-custom {
+    font-weight: 300;
+    font-size: 0.32rem;
+}
+
+.thin-content {
+    font-weight: 200;
+}
+
 h1 {
     &,
     & code {
+        font-weight: 400;
         font-size: 0.32rem;
     }
 }
@@ -385,6 +395,10 @@ aside.left {
   
   .block-top, .block-bottom { 
     background-image: var(--block-top);
+  }
+
+  .about-contact {
+    background-color: transparent !important;
   }
   
   .block-front { transform: translateZ(calc(var(--block-size) / 2)); }
