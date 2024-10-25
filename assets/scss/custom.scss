@@ -114,7 +114,8 @@ img {
 }
 
 a {
-    color: $link-color;
+    color: gray;
+    text-decoration: underline;
 
     &:hover {
         text-decoration: none;
