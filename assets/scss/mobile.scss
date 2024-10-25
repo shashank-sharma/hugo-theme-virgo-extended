@@ -41,7 +41,8 @@
                 .right {
                     max-width: 100%;
                     .title {
-                        white-space: nowrap;
+                        white-space: initial;
+                        text-align: center;
                         overflow: hidden;
                         &:hover {
                             overflow: auto;
@@ -139,10 +140,6 @@
                     .item-term {
                         margin: 12px;
                         background: $post-item-bg-color;
-
-                        > a {
-                            background: $gray-white-500;
-                        }
                     }
 
                     .item-term {
@@ -168,7 +165,8 @@
             }
 
             .container-page {
-                padding: 0 8px 16px;
+                padding: 0 16px 16px;
+                font-size: 0.15rem;
 
                 .ship {
                     #local-search #sc-input, 

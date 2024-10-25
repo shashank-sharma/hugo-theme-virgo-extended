@@ -468,6 +468,20 @@ aside.left {
     }
 }
 
+@media (min-width: 1250px) {
+  .img-200 {
+    max-width: 200%;
+    left: -50%;
+    position: relative;
+  }
+
+  .img-150 {
+    max-width: 150%;
+    left: -25%;
+    position: relative;
+  }
+}
+
 .floating {
     animation-name: float;
     animation-duration: 5s;

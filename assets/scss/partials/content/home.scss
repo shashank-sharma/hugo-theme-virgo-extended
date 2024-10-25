@@ -90,7 +90,7 @@
 
 .holo-badge {
     font-family: 'Roboto', sans-serif;
-    width: 250px;
+    width: 300px;
     background: white;
     border-radius: 16px;
     backdrop-filter: blur(20px);
@@ -296,5 +296,11 @@
     .holo-status-text {
       flex-grow: 1;
       text-align: right;
+    }
+  }
+
+  @media (min-width: 720px) {
+    .holo-badge {
+      max-width: 350px;
     }
   }
