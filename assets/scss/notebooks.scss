@@ -1,0 +1,231 @@
+/* Main container */
+.notebook-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    color: #24292e;
+    background: #ffffff;
+}
+
+/* Header styling */
+.notebook-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e1e4e8;
+}
+
+.notebook-header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #24292e;
+    margin: 0 0 1rem 0;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    color: #0366d6;
+    text-decoration: none;
+    font-size: 14px;
+    gap: 4px;
+}
+
+.back-link:hover {
+    color: #0969da;
+    text-decoration: underline;
+}
+
+/* Cell containers */
+.notebook-cell {
+    margin: 0 0 16px 0;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Markdown cells */
+.markdown-cell {
+    padding: 16px;
+    background: #ffffff;
+}
+
+.markdown-cell h1 { font-size: 2em; margin-top: 24px; margin-bottom: 16px; font-weight: 600; }
+.markdown-cell h2 { font-size: 1.5em; margin-top: 24px; margin-bottom: 16px; font-weight: 600; }
+.markdown-cell h3 { font-size: 1.25em; margin-top: 24px; margin-bottom: 16px; font-weight: 600; }
+.markdown-cell h4 { font-size: 1em; margin-top: 24px; margin-bottom: 16px; font-weight: 600; }
+
+.markdown-cell p {
+    margin-bottom: 16px;
+}
+
+.markdown-cell strong {
+    font-weight: 600;
+}
+
+/* Code cells */
+.code-cell {
+    position: relative;
+    background: rgba(239, 239, 239, .5);
+}
+
+/* Input prompt styling (like [1]:) */
+.code-cell::before {
+    content: "In []:";
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 8px 12px;
+    color: #57606a;
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    font-size: 12px;
+    user-select: none;
+    border-right: 1px solid #d0d7de;
+    background: rgba(239, 239, 239, .5);
+    height: 100%;
+}
+
+.code-source {
+    margin-left: 56px; /* Space for the prompt */
+    padding: 8px 16px;
+    border-bottom: 1px solid #d0d7de;
+    overflow-x: auto;
+}
+
+.code-source pre {
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #1F2328;
+    tab-size: 4;
+}
+
+/* Python Syntax Highlighting */
+.code-source .keyword { color: #cf222e; } /* def, return, import, etc. */
+.code-source .string { color: #0a3069; } /* String literals */
+.code-source .number { color: #0550ae; } /* Numeric literals */
+.code-source .comment { color: #6e7781; font-style: italic; } /* Comments */
+.code-source .function { color: #8250df; } /* Function names */
+.code-source .class { color: #953800; } /* Class names */
+.code-source .operator { color: #cf222e; } /* Operators like +, -, *, / */
+.code-source .builtin { color: #0550ae; } /* Built-in functions */
+.code-source .variable { color: #24292f; } /* Variable names */
+.code-source .decorator { color: #116329; } /* Decorators */
+
+/* Output cells */
+.code-output {
+    position: relative;
+    background: #ffffff;
+}
+
+.output-stream {
+    margin: 0;
+    padding: 8px 0;
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #24292f;
+    white-space: pre-wrap;
+}
+
+.output-result pre {
+    margin: 0;
+    padding: 8px 0;
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #24292f;
+    white-space: pre-wrap;
+}
+
+/* DataFrame/Table styling */
+.dataframe {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 8px 0;
+    font-size: 13px;
+}
+
+.dataframe th,
+.dataframe td {
+    padding: 6px 13px;
+    border: 1px solid #d0d7de;
+}
+
+.dataframe th {
+    font-weight: 600;
+    background: #f6f8fa;
+}
+
+.dataframe tbody tr:nth-child(2n) {
+    background: #f6f8fa;
+}
+
+/* Error message styling */
+.error-message {
+    padding: 16px;
+    margin: 16px 0;
+    color: #cf222e;
+    background-color: #ffebe9;
+    border: 1px solid rgba(207, 34, 46, 0.3);
+    border-radius: 6px;
+}
+
+/* Matplotlib output */
+.output-result img {
+    max-width: 100%;
+    height: auto;
+    margin: 8px 0;
+    background: #ffffff;
+}
+
+/* Links in markdown */
+.markdown-cell a {
+    color: #0969da;
+    text-decoration: none;
+}
+
+.markdown-cell a:hover {
+    text-decoration: underline;
+}
+
+/* Lists in markdown */
+.markdown-cell ul,
+.markdown-cell ol {
+    margin-bottom: 16px;
+    padding-left: 2em;
+}
+
+.markdown-cell li {
+    margin: 0.25em 0;
+}
+
+/* Blockquotes */
+.markdown-cell blockquote {
+    padding: 0 1em;
+    color: #57606a;
+    border-left: 0.25em solid #d0d7de;
+    margin: 16px 0;
+}
+
+/* Code in markdown */
+.markdown-cell code {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(175,184,193,0.2);
+    border-radius: 6px;
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+}
+
+@media (max-width: 900px) {
+    .code-cell::before {
+        display: none;
+    }
+
+    .code-source {
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,77 @@
+{{ $notebookName := .File.ContentBaseName }}
+{{ $notebookPath := printf "notebooks/%s.ipynb" $notebookName }}
+
+{{ $notebook := readFile $notebookPath | transform.Unmarshal }}
+<div class="notebook-references">
+    <h4>Referenced In</h2>
+        {{ $currentPath := .RelPermalink }}
+        {{ $references := slice }}
+
+        <!-- Search through all regular pages -->
+        {{ range .Site.RegularPages }}
+        {{ $content := .RawContent }}
+        {{ if or (strings.Contains $content $currentPath) (strings.Contains $content $notebookName) }}
+        {{ $references = $references | append . }}
+        {{ end }}
+        {{ end }}
+
+        {{ if $references }}
+        <ul class="reference-list">
+            {{ range $references }}
+            <li class="reference-item">
+                <a href="{{ .RelPermalink }}" class="reference-link">
+                    <div class="reference-title">{{ .Title }}</div>
+                    <div class="reference-meta">
+                        <span class="reference-date">{{ .Date.Format "January 2, 2006" }}</span>
+                        {{ with .Section }}
+                        <span class="reference-section">in {{ . }}</span>
+                        {{ end }}
+                    </div>
+                </a>
+            </li>
+            {{ end }}
+        </ul>
+        {{ else }}
+        <p class="no-references">No references found.</p>
+        {{ end }}
+</div>
+<div class="notebook-content">
+    {{ range $index, $cell := $notebook.cells }}
+    <div class="notebook-cell {{ .cell_type }}-cell">
+        {{ if eq .cell_type "markdown" }}
+        <div class="markdown-cell">
+            {{ range .source }}
+            {{ . | markdownify }}
+            {{ end }}
+        </div>
+        {{ else if eq .cell_type "code" }}
+        <div class="code-cell">
+            <div class="code-source">
+                {{ $code := "" }}
+                {{ range .source }}
+                {{ $code = printf "%s%s" $code . }}
+                {{ end }}
+                {{ highlight $code "python" "" }}
+            </div>
+            {{ if .outputs }}
+            <div class="code-output">
+                {{ range .outputs }}
+                {{ if eq .output_type "stream" }}
+                <pre class="output-stream">{{ range .text }}{{ . }}{{ end }}</pre>
+                {{ else if eq .output_type "execute_result" }}
+                <div class="output-result">
+                    {{ range .data }}
+                    {{ if eq (index . 0) "text/plain" }}
+                    <pre>{{ range (index . 1) }}{{ . }}{{ end }}</pre>
+                    {{ end }}
+                    {{ end }}
+                </div>
+                {{ end }}
+                {{ end }}
+            </div>
+            {{ end }}
+        </div>
+        {{ end }}
+    </div>
+    {{ end }}
+</div>

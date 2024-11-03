@@ -41,7 +41,6 @@
             display: flex;
             position: fixed;
             top: 126px;
-            right: 114px;
             a {
                 cursor: pointer;
                 img,
@@ -149,15 +148,12 @@
                 width: 100%;
                 display: block;
                 background: $white-000;
-                padding: 6px 4px;
+                padding: 6px 6px 4px 0;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 transition: 0.3s padding ease;
-
-                &:hover {
-                    padding-left: 16px;
-                }
+                text-decoration: none;
 
                 .date {
                     color: #999;
@@ -257,7 +253,7 @@
             margin: 24px auto;
             position: relative;
             overflow: visible;
-            border-bottom: 1px solid #dddddd;
+            border-bottom: 1px solid #eceaea;
 
             .desc {
                 display: none;
@@ -284,5 +280,12 @@
         display: flex;
         min-height: 520px;
         border-left-width: 0;
+    }
+}
+
+
+@media (max-width: 900px) {
+    .container-list .list-single-col .item .c-date {
+        position: static !important;
     }
 }

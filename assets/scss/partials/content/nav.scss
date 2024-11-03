@@ -32,7 +32,6 @@
 				background: $white;
 
                 &:hover {
-                    padding-left: 28px;
                     background: $gray-white-500;
 
                     em {
@@ -165,11 +164,6 @@
                     transition: 0.1s padding linear;
                     white-space: nowrap;
                     overflow: hidden;
-
-                    &:hover {
-                        padding-left: 16px;
-                        // background: $gray-white-500;
-                    }
                 }
             }
         }
@@ -190,15 +184,11 @@
                 padding-left: 4px;
 
                 &::before {
-                    content: '➣ ';
-                }
-                &:hover {
-                    padding-left: 16px;
+                    content: '';
                 }
 
                 a {
                     display: inline-block;
-                    width: 100%;
                     padding: 6px 0;
                 }
 

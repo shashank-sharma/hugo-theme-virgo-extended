@@ -20,14 +20,25 @@
             li {
                 a {
                     color: $gray-500;
+                    text-decoration: none;
                 }
             }
         }
 
         .curtag-desc {
+            display: flex;
+            align-items: center;
             padding-bottom: 12px;
+            padding-left: 5px;
+
+            img {
+                padding-right: 5px;
+                padding-bottom: 3px;
+            }
+
             a {
                 color: $gray-500;
+                text-decoration: none;
                 font-weight: 700;
             }
         }
@@ -81,6 +92,20 @@
     .desc {
         color: $gray-500;
         font-size: 0.14rem;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .desc-container {
+            display: flex;
+            align-items: center;
+            padding-right: 5px;
+
+            svg {
+                padding-right: 4px;
+                padding-bottom: 2px;
+            }
+        }
     }
 
     .toc {
@@ -107,6 +132,7 @@
             list-style: none;
             a {
                 line-height: 1.5;
+                text-decoration: none;
                 color: $gray-500;
                 &:hover {
                     color: $link-hover-color;
@@ -122,7 +148,6 @@
             display: flex;
             position: fixed;
             top: 136px;
-            right: 114px;
             a {
                 cursor: pointer;
                 img,
@@ -196,7 +221,6 @@
 
     .highlight {
         position: relative;
-        margin: 16px 0;
         border-radius: 8px;
         font-size: 0.14rem;
         overflow: hidden;
@@ -226,7 +250,7 @@
         font-size: 0.14rem;
         border-radius: 8px;
 
-        padding: 20px 10px;
+        padding: 10px 10px;
         overflow: hidden;
         position: relative;
 

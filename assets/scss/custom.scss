@@ -47,7 +47,7 @@ h6 {
 h1 {
     &,
     & code {
-        font-weight: 400;
+        font-weight: 500;
         font-size: 0.32rem;
     }
 }
@@ -59,7 +59,7 @@ h2 {
     }
 
     &:before {
-        content: '¶² ';
+        content: '';
     }
 }
 
@@ -70,7 +70,7 @@ h3 {
     }
 
     &:before {
-        content: '¶³ ';
+        content: '';
     }
 }
 
@@ -81,7 +81,7 @@ h4 {
     }
 
     &:before {
-        content: '¶⁴ ';
+        content: '';
     }
 }
 
@@ -92,7 +92,7 @@ h5 {
     }
 
     &:before {
-        content: '¶⁵ ';
+        content: '';
     }
 }
 
@@ -103,7 +103,7 @@ h6 {
     }
 
     &:before {
-        content: '¶⁶ ';
+        content: '⁶ ';
     }
 }
 
