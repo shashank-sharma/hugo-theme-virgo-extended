@@ -138,3 +138,29 @@
         background-position: 0 0;
     }
 }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: #4f4c4c;
+    color: #fff;
+    text-align: center;
+    padding: 3px 0;
+    border-radius: 3px;
+    font-size: 0.12rem;
+   
+    position: absolute;
+    transition: opacity 0.6s;
+    top: -110%;
+    left: -50%;
+    z-index: 3;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
