@@ -21,7 +21,7 @@ if (params.params.backend && params.params.backend.deviceapiendpoint && isHomePa
     const tocSidebar = document.querySelector('#TableOfContents');
     const tocBorder = document.querySelector('.toc');
 
-    if (relSidebar && tocSidebar) {
+    if (relSidebar || tocSidebar) {
         let scrollTimeout;
         window.addEventListener('scroll', () => {
             if (!scrollTimeout) {
@@ -38,8 +38,12 @@ if (params.params.backend && params.params.backend.deviceapiendpoint && isHomePa
             const shouldHide = scrollPosition > 400;
             
             tocBorder.style.borderLeft = shouldHide ? '0' : '1px solid #dee2e6';
-            relSidebar.style.transform = shouldHide ? 'translateX(-120%)' : 'translateX(0)';
-            tocSidebar.style.transform = shouldHide ? 'translateX(120%)' : 'translateX(0)';
+            if (relSidebar) {
+                relSidebar.style.transform = shouldHide ? 'translateX(-120%)' : 'translateX(0)';
+            }
+            if (tocBorder) {
+                tocSidebar.style.transform = shouldHide ? 'translateX(120%)' : 'translateX(0)';
+            }
         }
     }
 }
