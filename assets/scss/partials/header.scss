@@ -19,6 +19,12 @@
         flex-direction: column;
         justify-content: center;
         padding-top: 40px;
+
+        .img-wrapper-page {
+            width: 80px !important;
+            margin-left: -50px !important;
+        }
+
         .img-wrapper {
             padding: 5px;
             width: 100px;
@@ -83,6 +89,8 @@
         display: flex;
         justify-content: center;
         position: relative;
+        max-width: 700px;
+        margin: 0 auto;
 
         .left {
             position: absolute;
@@ -163,4 +171,19 @@
   
   .tooltip:hover .tooltiptext {
     visibility: visible;
+  }
+
+  .title {
+    font-size: 0.4rem;
+    font-weight: 800;
+    text-align: left;
+    line-height: 0.5rem;
+  }
+
+
+  h2.headline {
+    font-size: 0.3rem;
+    font-weight: 600;
+    text-align: left;
+    line-height: 0.5rem;
   }

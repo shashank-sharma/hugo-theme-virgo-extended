@@ -17,7 +17,15 @@ function isNightTime() {
     return hour >= 18 || hour < 6;
 }
 
+function isHomePage() {
+    return window.location.pathname === '/' || window.location.pathname === '/index.html';
+}
+
 function setInitialColorMode() {
+
+    if (isHomePage()) {
+        return;
+    }
     const storedPreference = getDarkOfLocalStorage();
     if (storedPreference) {
         if (storedPreference === 'on') {
@@ -48,7 +56,7 @@ function disableDarkMode() {
     setDarkOfLocalStorage('off');
 }
 
-// setInitialColorMode();
+setInitialColorMode();
 
 export default function toggleColor() {
     let _isEnabled = isEnabled();

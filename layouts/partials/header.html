@@ -2,13 +2,14 @@
 
 <div class="home-container-header">
     <div class="left">
-                <div class="img-wrapper" style="background: {{ with .Site.Params.img.background }}{{.}}{{end}};">
-                    {{if .Site.Params.Logo }}
-                    <a target="_self" href="/">
-                    <img class="header-logo" id="header-logo" src="{{ .Site.Params.Logo }}" width="{{ with .Site.Params.img.width }}{{.}}{{end}}" />
-                    </a>
-                    {{ end }}
-                </div>
+        <div class="img-wrapper" style="background: {{ with .Site.Params.img.background }}{{.}}{{end}};">
+            {{if .Site.Params.Logo }}
+            <a target="_self" href="/">
+                <img class="header-logo" id="header-logo" src="{{ .Site.Params.Logo }}"
+                    width="{{ with .Site.Params.img.width }}{{.}}{{end}}" />
+            </a>
+            {{ end }}
+        </div>
     </div>
     <div class="header-title">{{ .Title }}</div>
     <div class="some">
@@ -20,10 +21,12 @@
 
 <div class="home-container-header">
     <div class="left">
-        <div class="img-wrapper" style="background: {{ with .Site.Params.img.background }}{{.}}{{end}};">
+        <div class="img-wrapper img-wrapper-page"
+            style="background: {{ with .Site.Params.img.background }}{{.}}{{end}};">
             {{if .Site.Params.Logo }}
             <a target="_self" href="/">
-            <img class="header-logo" id="header-logo" src="{{ .Site.Params.Logo }}" width="{{ with .Site.Params.img.width }}{{.}}{{end}}" />
+                <img class="header-logo" id="header-logo" src="{{ .Site.Params.Logo }}"
+                    width="{{ with .Site.Params.img.width }}{{.}}{{end}}" />
             </a>
             {{ end }}
         </div>
@@ -31,9 +34,9 @@
 </div>
 <div class="container-header">
     <div class="right">
-        <h1 class="title">{{ .Title }}</h1>
+        <div class="title">{{ .Title }}</div>
         <div id="toc">📜</div>
-        </div>
+    </div>
 </div>
 
 {{ end }}
