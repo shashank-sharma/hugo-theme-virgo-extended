@@ -8,6 +8,10 @@ export default function viewImage(e) {
 	let curImgSrc = e.target.attributes.src.value;
 	curImgSrc = encodeURI(curImgSrc)
 	console.log(curImgSrc)
+	
+	// Check if the clicked image has the dark-invert class
+	const hasDarkInvertClass = e.target.classList.contains('dark-invert');
+	const darkInvertClass = hasDarkInvertClass ? 'class="dark-invert"' : '';
 
 	// backdrop-filter: blur(5px);
 	document.body.style = "overflow: hidden;"
@@ -41,6 +45,7 @@ export default function viewImage(e) {
 				<img 
 					id="img"
 					src=${curImgSrc} 
+					${darkInvertClass}
 					style="
 						max-width: none;
 						display: block; 

@@ -1,36 +1,36 @@
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <meta name="description" content="{{ .Title }} - {{ .Permalink }} - {{ .Site.Params.Description }}">
-    <meta name="author" content="{{ .Site.Params.Author }} - {{ .Site.BaseURL }}">
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ .Site.BaseURL }}">
-    <meta property="og:title" content="Shashank Sharma">
-    <meta property="og:description" content="{{ .Site.Params.Description }}">
-    <meta property="og:image" content="{{ .Site.BaseURL }}img/metaimage.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <meta name="description" content="{{ .Title }} - {{ .Permalink }} - {{ .Site.Params.Description }}">
+  <meta name="author" content="{{ .Site.Params.Author }} - {{ .Site.BaseURL }}">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ .Site.BaseURL }}">
+  <meta property="og:title" content="Shashank Sharma">
+  <meta property="og:description" content="{{ .Site.Params.Description }}">
+  <meta property="og:image" content="{{ .Site.BaseURL }}img/metaimage.png">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ .Site.BaseURL }}">
-    <meta property="twitter:title" content="{{ .Title }}">
-    <meta property="twitter:description" content="{{ .Site.BaseURL }}">
-    <meta property="twitter:image" content="{{ .Site.BaseURL }}img/metaimage.png">
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="{{ .Site.BaseURL }}">
+  <meta property="twitter:title" content="{{ .Title }}">
+  <meta property="twitter:description" content="{{ .Site.BaseURL }}">
+  <meta property="twitter:image" content="{{ .Site.BaseURL }}img/metaimage.png">
 
-    <title>{{ .Title }}</title>
-    <base target="_blank">
-    <link rel="icon" type="image/png" href="{{ .Site.BaseURL }}img/favicon.ico">
-    {{ $style := resources.Get "style.scss" | toCSS | minify | fingerprint }}
-    <link rel="stylesheet" href="{{ $style.Permalink }}">
-    <script>const DARK = {{.Site.Params.dark}};</script>
-    {{ $built := resources.Get "main.js" | js.Build (dict "params" (dict "params" .Site.Params)) }}
-    <script type="text/javascript" src="{{ $built.RelPermalink }}" defer></script>
+  <title>{{ .Title }}</title>
+  <base target="_blank">
+  <link rel="icon" type="image/png" href="{{ .Site.BaseURL }}img/favicon.ico">
+  {{ $style := resources.Get "style.scss" | toCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $style.Permalink }}">
+  <script>const DARK = {{.Site.Params.dark }};</script>
+  {{ $built := resources.Get "main.js" | js.Build (dict "params" (dict "params" .Site.Params)) }}
+  <script type="text/javascript" src="{{ $built.RelPermalink }}" defer></script>
 
-    {{ if not .Site.IsServer }}
-      {{ with .Site.Params.Analytics }}
-        {{ if eq .provider "umami" }}
-          <script async defer data-website-id="{{ .umamiWebsiteId }}" src="https://{{ .umamiServerUrl }}/script.js"></script>
-        {{ end }}
-    {{ end }}
+  {{ if not hugo.IsServer }}
+  {{ with .Site.Params.Analytics }}
+  {{ if eq .provider "umami" }}
+  <script async defer data-website-id="{{ .umamiWebsiteId }}" src="https://{{ .umamiServerUrl }}/script.js"></script>
+  {{ end }}
+  {{ end }}
   {{ end }}
 </head>

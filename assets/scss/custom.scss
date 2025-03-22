@@ -606,3 +606,16 @@ aside.left {
       transform: translate(0, 0px);
     }
   }
+
+
+.dark-invert {
+  filter: none;
+}
+
+html[data-darkreader-scheme="dark"] .dark-invert {
+  filter: invert(0.9);
+}
+
+html[data-darkreader-scheme="dark"] .giscus {
+  filter: invert(0.9);
+}
