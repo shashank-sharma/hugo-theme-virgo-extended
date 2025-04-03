@@ -619,3 +619,48 @@ html[data-darkreader-scheme="dark"] .dark-invert {
 html[data-darkreader-scheme="dark"] .giscus {
   filter: invert(0.9);
 }
+
+.footnote-ref {
+  line-height: 0;
+  position: relative;
+  top: -0.5em;
+  vertical-align: baseline;
+  text-decoration: none;
+  margin-left: 1px;
+}
+
+/* For hover effect */
+.footnote-ref:hover {
+  text-decoration: underline;
+  color: #3366bb;
+}
+
+/* Add square brackets around the footnote number */
+.footnote-ref::before {
+  content: "[";
+}
+
+.footnote-ref::after {
+  content: "]";
+}
+
+.gist-data{
+  height: 400px;
+  overflow-y: visible;
+}
+
+.gist-data {
+  table tbody tr {
+    border-bottom-color: rgba(0, 0, 0, 0);
+  }
+}
+
+.footnotes {
+  font-size: 0.12rem;
+}
+
+.blog-header-image {
+  margin-top: 1rem;
+  border: 0;
+  box-shadow: rgba(115, 115, 115, 0.35) 0px 23px 50px 20px;
+}

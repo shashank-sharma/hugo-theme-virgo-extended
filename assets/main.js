@@ -35,7 +35,10 @@ if (params.params.backend && params.params.backend.deviceapiendpoint && isHomePa
         // Handle scroll event
         function handleScroll() {
             const scrollPosition = window.scrollY;
-            const shouldHide = scrollPosition > 400;
+            const totalHeight = document.documentElement.scrollHeight;
+            const viewportHeight = window.innerHeight;
+            const distanceFromBottom = totalHeight - (scrollPosition + viewportHeight);
+            const shouldHide = distanceFromBottom < 100;
             
             tocBorder.style.borderLeft = shouldHide ? '0' : '1px solid #dee2e6';
             if (relSidebar) {
