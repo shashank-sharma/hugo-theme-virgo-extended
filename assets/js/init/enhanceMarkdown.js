@@ -1,6 +1,9 @@
 import $ from 'js/libs/jquery.min';
 
 export default function() {
+	// Add target="_blank" to footnote references
+	$('a.footnote-ref').attr('target', '_self');
+
 	$('em').each((idx, item) => {
 		// console.log(item.outerHTML)
 
