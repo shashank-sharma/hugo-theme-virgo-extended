@@ -265,6 +265,23 @@
                 font-size: 0.12rem;
 				// font-family: $font-josefin;
             }
+            
+            // Hide tags by default and show on hover
+            .container-ctgtag {
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                margin: 0;
+                padding: 0;
+                transition: all 0.3s ease;
+            }
+            
+            &:hover .container-ctgtag {
+                max-height: 50px; // Set a value large enough to fit tags
+                opacity: 1;
+                margin-top: 8px;
+                padding-bottom: 8px;
+            }
         }
 
         .item-term {

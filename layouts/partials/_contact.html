@@ -24,7 +24,7 @@
 				<span class="tooltiptext">Navigation</span>
 			</a>
 
-			{{ if .Site.Params.contact.config.ship }}
+			{{ if .Site.Params.contact.ship }}
 			<a href="{{ .Site.Params.contact.config.ship }}" target={{ .Site.Params.contact.config.target }}>
 				<svg t="1692931671484" class="icon" viewBox="0 0 1024 1024" version="1.1"
 					xmlns="http://www.w3.org/2000/svg" p-id="26683" width="20" height="20">
@@ -58,7 +58,8 @@
 				<span class="tooltiptext">Tags</span>
 			</a>
 
-			<a class="tooltip" href="/about" target={{ .Site.Params.contact.config.target }}>
+			<a class="tooltip" href="{{ with .Site.Params.contact.about_url }}{{ . }}{{ else }}/about{{ end }}"
+				target="_blank">
 				<svg t="1714034273154" class="icon" viewBox="0 0 1024 1024" version="1.1"
 					xmlns="http://www.w3.org/2000/svg" p-id="17333" width="24" height="24">
 					<path
@@ -67,6 +68,11 @@
 				</svg>
 				<span class="tooltiptext">About</span>
 			</a>
+
+			<div id="light-dark" class="tooltip" style="display: inline-flex; align-items: center;">
+				<a><img src="/imgs/icons/moon2.svg" alt="" width="24" height="24"></a>
+				<span class="tooltiptext">dark mode</span>
+			</div>
 
 			<span href="" style="color: #acacac; margin: auto 4px;">·</span>
 			{{ end }}

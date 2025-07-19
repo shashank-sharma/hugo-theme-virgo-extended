@@ -1,6 +1,12 @@
-export default function renderRandomVideo(videoSources, containerId) {
-    if (!Array.isArray(videoSources) || videoSources.length === 0) {
-        console.error('Invalid or empty video sources array');
+export default function renderRandomVideo(lightVideoSources, darkVideoSources, containerId) {
+    // Validate inputs
+    if (!Array.isArray(lightVideoSources) || lightVideoSources.length === 0) {
+        console.error('Invalid or empty light video sources array');
+        return;
+    }
+    
+    if (!Array.isArray(darkVideoSources) || darkVideoSources.length === 0) {
+        console.error('Invalid or empty dark video sources array');
         return;
     }
 
@@ -19,15 +25,41 @@ export default function renderRandomVideo(videoSources, containerId) {
     container.style.position = 'relative';
     container.style.overflow = 'hidden';
 
-    let currentIndex = Math.floor(Math.random() * videoSources.length);
+    let currentMode = getDarkMode();
+    let currentSources = currentMode ? darkVideoSources : lightVideoSources;
+    let currentIndex = Math.floor(Math.random() * currentSources.length);
+    let preloadedVideos = {};
+    
+    // Load stored video index
     if (localStorage.getItem("video_index") !== null) {
         currentIndex = parseInt(localStorage.getItem("video_index"));
     }
 
+    function getDarkMode() {
+        // Check if dark mode is active
+        return document.documentElement.classList.contains('dark-mode') ||
+               document.documentElement.hasAttribute('data-darkreader-scheme');
+    }
+
+    function getCurrentVideoSources() {
+        const isDark = getDarkMode();
+        return isDark ? darkVideoSources : lightVideoSources;
+    }
+
     function getNextVideo() {
-        currentIndex = (currentIndex + 1) % videoSources.length;
+        const sources = getCurrentVideoSources();
+        currentIndex = (currentIndex + 1) % sources.length;
         localStorage.setItem("video_index", currentIndex);
-        return videoSources[currentIndex];
+        return sources[currentIndex];
+    }
+
+    function getCurrentVideo() {
+        const sources = getCurrentVideoSources();
+        // Ensure index is within bounds for current mode
+        if (currentIndex >= sources.length) {
+            currentIndex = 0;
+        }
+        return sources[currentIndex];
     }
 
     function createVideoElement(src) {
@@ -40,30 +72,48 @@ export default function renderRandomVideo(videoSources, containerId) {
         return videoElement;
     }
 
-    function transitionToNewVideo() {
+    function transitionToNewVideo(newSrc = null) {
         const oldVideo = container.querySelector('video');
-        const newVideo = createVideoElement(getNextVideo());
+        const videoSrc = newSrc || getNextVideo();
+        const newVideo = createVideoElement(videoSrc);
         
-        oldVideo.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
-        newVideo.style.transition = 'transform 0.5s ease-in, opacity 0.5s ease-in';
-        newVideo.style.transform = 'translateY(1%)';
-        newVideo.style.opacity = '0';
-        
-        container.appendChild(newVideo);
-        newVideo.offsetHeight;
+        if (oldVideo) {
+            oldVideo.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
+            newVideo.style.transition = 'transform 0.5s ease-in, opacity 0.5s ease-in';
+            newVideo.style.transform = 'translateY(1%)';
+            newVideo.style.opacity = '0';
+            
+            container.appendChild(newVideo);
+            newVideo.offsetHeight;
 
-        oldVideo.style.transform = 'translateY(-1%)';
-        oldVideo.style.opacity = '0';
-        newVideo.style.transform = 'translateY(0)';
-        newVideo.style.opacity = '1';
+            oldVideo.style.transform = 'translateY(-1%)';
+            oldVideo.style.opacity = '0';
+            newVideo.style.transform = 'translateY(0)';
+            newVideo.style.opacity = '1';
 
-        setTimeout(() => {
-            oldVideo.remove();
-        }, 500);
+            setTimeout(() => {
+                oldVideo.remove();
+            }, 500);
+        } else {
+            // No existing video, just add the new one
+            container.appendChild(newVideo);
+        }
     }
 
-    function preloadVideos() {
-        return Promise.all(videoSources.map(src => {
+    function handleModeChange() {
+        const newMode = getDarkMode();
+        if (newMode !== currentMode) {
+            currentMode = newMode;
+            currentSources = getCurrentVideoSources();
+            
+            // Transition to the equivalent video in the new mode
+            const newVideoSrc = getCurrentVideo();
+            transitionToNewVideo(newVideoSrc);
+        }
+    }
+
+    function preloadVideos(sources) {
+        return Promise.all(sources.map(src => {
             return new Promise((resolve, reject) => {
                 const video = document.createElement('video');
                 video.preload = 'auto';
@@ -83,13 +133,34 @@ export default function renderRandomVideo(videoSources, containerId) {
         }, 1000);
     }
 
-    // Start preloading
-    preloadVideos().then(videos => {
-        preloadedVideos = videos;
+    // Preload both light and dark videos
+    Promise.all([
+        preloadVideos(lightVideoSources),
+        preloadVideos(darkVideoSources)
+    ]).then(([lightVideos, darkVideos]) => {
+        preloadedVideos = {
+            light: lightVideos,
+            dark: darkVideos
+        };
         hideLoadingScreen();
-        const initialVideo = createVideoElement(getNextVideo());
+        
+        // Show initial video
+        const initialVideo = createVideoElement(getCurrentVideo());
         container.appendChild(initialVideo);
-        container.addEventListener('click', transitionToNewVideo);
+        
+        // Add click handler for manual transitions
+        container.addEventListener('click', () => transitionToNewVideo());
+        
+        // Listen for dark mode changes
+        const observer = new MutationObserver(handleModeChange);
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class', 'data-darkreader-scheme']
+        });
+        
+        // Also listen for manual dark mode toggle events
+        document.addEventListener('darkModeToggle', handleModeChange);
+        
     }).catch(error => {
         console.error('Error preloading videos:', error);
         hideLoadingScreen();

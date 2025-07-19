@@ -33,6 +33,16 @@
     </div>
 </div>
 <div class="container-header">
+    <!-- Blog Header - Navigation and Font Controls -->
+    {{ $IsNav := eq .Params.type "nav"}}
+    {{ $IsSecrets := eq .Section "secrets"}}
+    {{ $IsPostPage := and (not $IsNav) }}
+    {{ if and $IsPostPage (not $IsNav) (not $IsSecrets) }}
+    <div class="blog-header-wrapper">
+        {{- partial "partials/_blog-header.html" . -}}
+    </div>
+    {{ end }}
+
     <div class="right">
         <div class="title">{{ .Title }}</div>
         <div id="toc">📜</div>

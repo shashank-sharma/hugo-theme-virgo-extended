@@ -1,0 +1,146 @@
+{{ define "main" }}
+<div class="container-main container-list container-reading-list">
+    <div class="toc">
+        {{- partial "partials/_page-operation.html" . -}}
+    </div>
+
+    <div class="content">
+        {{ .Content }}
+    </div>
+
+    <!-- Reading Statistics -->
+    <div class="reading-stats">
+        {{ $reading := 0 }}
+        {{ $completed := 0 }}
+        {{ $planToRead := 0 }}
+        {{ $onHold := 0 }}
+        {{ $dropped := 0 }}
+        {{ $manga := 0 }}
+        {{ $manhua := 0 }}
+        {{ $manhwa := 0 }}
+
+        {{ range .Pages }}
+        {{ if eq .Params.status "Reading" }}{{ $reading = add $reading 1 }}{{ end }}
+        {{ if eq .Params.status "Completed" }}{{ $completed = add $completed 1 }}{{ end }}
+        {{ if eq .Params.status "Plan to Read" }}{{ $planToRead = add $planToRead 1 }}{{ end }}
+        {{ if eq .Params.status "On-Hold" }}{{ $onHold = add $onHold 1 }}{{ end }}
+        {{ if eq .Params.status "Dropped" }}{{ $dropped = add $dropped 1 }}{{ end }}
+        {{ if eq .Params.type "manga" }}{{ $manga = add $manga 1 }}{{ end }}
+        {{ if eq .Params.type "manhua" }}{{ $manhua = add $manhua 1 }}{{ end }}
+        {{ if eq .Params.type "manhwa" }}{{ $manhwa = add $manhwa 1 }}{{ end }}
+        {{ end }}
+
+        <div class="stats-row">
+            <div class="stat-item">
+                <span class="stat-number">{{ $reading }}</span>
+                <span class="stat-label">Reading</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ $completed }}</span>
+                <span class="stat-label">Completed</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{ $planToRead }}</span>
+                <span class="stat-label">Plan to Read</span>
+            </div>
+            {{ if gt $onHold 0 }}
+            <div class="stat-item">
+                <span class="stat-number">{{ $onHold }}</span>
+                <span class="stat-label">On Hold</span>
+            </div>
+            {{ end }}
+            {{ if gt $dropped 0 }}
+            <div class="stat-item">
+                <span class="stat-number">{{ $dropped }}</span>
+                <span class="stat-label">Dropped</span>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+
+    <!-- Type Filters -->
+    <div class="reading-filters">
+        <button class="filter-btn active" data-filter="all">All ({{ len .Pages }})</button>
+        {{ if gt $manga 0 }}<button class="filter-btn" data-filter="manga">Manga ({{ $manga }})</button>{{ end }}
+        {{ if gt $manhua 0 }}<button class="filter-btn" data-filter="manhua">Manhua ({{ $manhua }})</button>{{ end }}
+        {{ if gt $manhwa 0 }}<button class="filter-btn" data-filter="manhwa">Manhwa ({{ $manhwa }})</button>{{ end }}
+    </div>
+
+    <div class="reading-list list-single-col">
+        {{/* We paginate the pages of this section */}}
+        {{ $pages := .Paginator.Pages }}
+        {{ range $pages }}
+        <div class="reading-item item" data-type="{{ .Params.type }}" data-status="{{ .Params.status }}">
+            <a href="{{ .Permalink }}" class="reading-item-link">
+                {{ with .Params.image }}
+                <div class="reading-item-image-container">
+                    <img src="{{ . }}" alt="Cover for {{ $.Title }}" class="reading-item-image">
+                    {{ with $.Params.publication_status }}
+                    <div class="publication-status-indicator publication-{{ lower . }}">
+                        {{ if eq . "Completed" }}✓{{ else if eq . "Ongoing" }}●{{ else if eq . "Hiatus" }}⏸{{ else if eq
+                        . "Cancelled" }}✕{{ end }}
+                    </div>
+                    {{ end }}
+                </div>
+                {{ end }}
+                <div class="reading-item-content">
+                    <span class="reading-item-title">{{ .Title }}</span>
+                    <div class="reading-item-meta-compact">
+                        {{ with .Params.status }}<span class="meta-tag status-{{ lower . | replaceRE " " " -" }}">{{ .
+                            }}</span>{{ end }}
+                        {{ with .Params.rating }}{{ if gt . 0 }}<span class="meta-tag rating">★ {{ . }}/10</span>{{ end
+                        }}{{ end }}
+                        {{ with .Params.type }}<span class="meta-tag type-{{ lower . }}">{{ . | title }}</span>{{ end }}
+                        {{ with .Params.author }}{{ if . }}<span class="meta-tag author">{{ . }}</span>{{ end }}{{ end
+                        }}
+                    </div>
+                    {{ with .Params.genres }}
+                    {{ if gt (len .) 0 }}
+                    <div class="reading-item-genres">
+                        {{ range first 4 . }}
+                        {{ if . }}<span class="meta-tag genre">{{ . }}</span>{{ end }}
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                    {{ end }}
+                </div>
+            </a>
+            <div class="c-date">{{ .Date.Format "Jan 06" }}</div>
+        </div>
+        {{ end }}
+    </div>
+
+    <div class="container-pagination">
+        {{ template "_internal/pagination.html" . }}
+    </div>
+</div>
+
+<script>
+    // Reading List Filter Functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const readingItems = document.querySelectorAll('.reading-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const filter = this.getAttribute('data-filter');
+
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Filter items
+                readingItems.forEach(item => {
+                    const itemType = item.getAttribute('data-type');
+
+                    if (filter === 'all' || itemType === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+{{ end }}

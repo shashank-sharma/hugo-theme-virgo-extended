@@ -7,6 +7,7 @@ import initCodeBlock from "js/init/initCodeBlock";
 import enhanceOrgMode from './js/init/enhanceOrgMode';
 import enhanceMarkdown from './js/init/enhanceMarkdown';
 import runMisc from './js/init/runMisc';
+import BlogHeader from './js/init/blogHeader';
 import * as params from '@params';
 
 function isHomePage() {
@@ -52,8 +53,10 @@ if (params.params.backend && params.params.backend.deviceapiendpoint && isHomePa
 }
 
 if (params.params.video.src && isHomePage()) {
-    console.log("Rendering video");
-    homeVideo(params.params.video.src, "home-header-vector-body")
+    console.log("Rendering video with dark mode support");
+    const lightVideos = params.params.video.src || [];
+    const darkVideos = params.params.video.darksrc || lightVideos; // Fallback to light videos if dark not available
+    homeVideo(lightVideos, darkVideos, "home-header-vector-body")
 }
 
 greet();
@@ -63,3 +66,4 @@ enhanceMarkdown();
 initImage();
 initEventBinding();
 runMisc();
+BlogHeader.init();

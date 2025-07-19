@@ -23,6 +23,8 @@
   {{ $style := resources.Get "style.scss" | toCSS | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $style.Permalink }}">
   <script>const DARK = {{.Site.Params.dark }};</script>
+  {{ $darkModeInit := resources.Get "js/utils/darkModeInit.js" | js.Build }}
+  <script type="text/javascript" src="{{ $darkModeInit.RelPermalink }}"></script>
   {{ $built := resources.Get "main.js" | js.Build (dict "params" (dict "params" .Site.Params)) }}
   <script type="text/javascript" src="{{ $built.RelPermalink }}" defer></script>
 

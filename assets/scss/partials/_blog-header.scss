@@ -1,0 +1,161 @@
+// Blog Header Styles
+.blog-header {
+    padding: 0.5rem 0;
+    
+    .blog-header-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+// Blog header wrapper for proper positioning within container-header
+.container-header {
+    .blog-header-wrapper {
+        width: 100%;
+        
+        .blog-header {
+            margin-bottom: 0;
+            padding: 0.2rem 0;
+            position: relative;
+        }
+    }
+    
+    // Ensure vertical stacking within container-header
+    display: flex;
+    flex-direction: column;
+    
+    .right {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.5rem;
+    }
+}
+
+// Simple header wrapper - no sticky functionality
+
+// Back Button Styles
+.blog-header-back {
+    .blog-back-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.1rem;
+        padding: 0;
+        background: transparent;
+        border: none;
+        color: var(--blog-text-color);
+        font-size: 0.2rem;
+        cursor: pointer;
+        transition: color 0.2s ease;
+        text-decoration: none;
+        
+        &:hover {
+            color: var(--blog-primary-color);
+        }
+        
+        .blog-back-icon {
+            flex-shrink: 0;
+        }
+        
+        .blog-back-text {
+            font-weight: 400;
+        }
+    }
+}
+
+// Font Size Controls
+.blog-header-font-controls {
+    display: flex;
+    gap: 0.3rem;
+    
+    .font-size-btn {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: color 0.2s ease, opacity 0.2s ease;
+        font-family: system-ui, -apple-system, sans-serif;
+        color: var(--blog-text-color);
+        opacity: 0.6;
+        
+        &:hover {
+            color: var(--blog-primary-color);
+            opacity: 1;
+        }
+        
+        &.active {
+            color: var(--blog-text-color);
+            opacity: 1;
+            font-weight: 600;
+        }
+        
+        // Different sizes for the A indicators
+        &[data-size="small"] {
+            font-size: 14px;
+        }
+        
+        &[data-size="medium"] {
+            font-size: 16px;
+        }
+        
+        &[data-size="large"] {
+            font-size: 18px;
+        }
+    }
+}
+
+// Font size classes for content - subtle adjustments only
+.font-size-small .content {
+    font-size: 0.9em;
+    
+    pre, code {
+        font-size: 0.85em;
+    }
+}
+
+.font-size-medium .content {
+    // Default - no changes to preserve original theme styling
+}
+
+.font-size-large .content {
+    font-size: 1.1em;
+    
+    pre, code {
+        font-size: 1.05em;
+    }
+}
+
+// Dark mode support
+:root {
+    --blog-text-color: gray;
+    --blog-hover-bg: rgba(239, 239, 239, 0.1);
+    --blog-primary-color: #e69;
+    --blog-header-bg: #ffffff;
+}
+
+:root.dark-mode {
+    --blog-text-color: #ffffff;
+    --blog-hover-bg: rgba(255, 255, 255, 0.1);
+    --blog-primary-color: #e69;
+    --blog-header-bg: transparent;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .blog-header-controls {
+        gap: 0.5rem;
+    }
+    
+    .blog-back-btn {
+        .blog-back-text {
+            display: none;
+        }
+    }
+    
+    .blog-header-font-controls {
+        gap: 0.75rem;
+    }
+}
+
+ 
