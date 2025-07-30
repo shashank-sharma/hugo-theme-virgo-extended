@@ -2,8 +2,9 @@
 {{ $IsNav := eq .Params.type "nav"}}
 {{ $IsNotebook := eq .Params.type "notebooks" }}
 {{ $IsSecrets := eq .Section "secrets"}}
+{{ $IsMicroblog := eq .Section "microblog"}}
 
-{{ $IsPostPage := and (not $IsNav) }}
+{{ $IsPostPage := and (not $IsNav) (not $IsMicroblog) }}
 
 {{ $IS_DEV_ENV := eq .Site.BaseURL "http://localhost:1313/"}}
 

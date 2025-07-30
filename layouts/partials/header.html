@@ -36,8 +36,8 @@
     <!-- Blog Header - Navigation and Font Controls -->
     {{ $IsNav := eq .Params.type "nav"}}
     {{ $IsSecrets := eq .Section "secrets"}}
-    {{ $IsPostPage := and (not $IsNav) }}
-    {{ if and $IsPostPage (not $IsNav) (not $IsSecrets) }}
+    {{ $IsIndividualContentPage := and .IsPage (not $IsNav) (not $IsSecrets) }}
+    {{ if $IsIndividualContentPage }}
     <div class="blog-header-wrapper">
         {{- partial "partials/_blog-header.html" . -}}
     </div>

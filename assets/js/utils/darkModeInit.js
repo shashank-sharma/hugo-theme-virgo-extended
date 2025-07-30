@@ -1,4 +1,6 @@
 // Dark mode initialization script
+import * as params from '@params';
+
 export function getDarkOfLocalStorage() {
     return localStorage.getItem('dark');
 }
@@ -23,6 +25,15 @@ export function shouldUseDarkMode() {
 // Basic initialization - just sets the minimal dark mode state without localStorage
 // The full initialization with icons is handled by toggleColor.js
 function initializeDarkMode() {
+    // Check if we're on homepage and if homepage dark mode is disabled
+    if (isHomePage() && !params.params.enableHomepageDarkMode) {
+        // Force light mode on homepage when disabled - ignore localStorage and time
+        document.documentElement.classList.remove('dark-mode');
+        document.documentElement.style.removeProperty('background-color');
+        document.documentElement.style.setProperty('color-scheme', 'light');
+        return;
+    }
+    
     const storedPreference = getDarkOfLocalStorage();
     
     if (storedPreference) {
