@@ -124,17 +124,6 @@
                 color: inherit;
                 padding: 20px;
                 height: 100%;
-                
-                &:hover {
-                    .card-title {
-                        color: $primary;
-                    }
-                    
-                    .read-more span {
-                        color: $primary;
-                        transform: translateX(4px);
-                    }
-                }
             }
             
             .card-date {
@@ -291,6 +280,25 @@
                 .card-link {
                     padding: 14px;
                 }
+            }
+        }
+    }
+}
+
+// Mobile page-operation styles
+@media (max-width: 768px) {
+    .container-microblog .toc .page-operation {
+        flex-direction: row;
+        gap: 12px;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 8px 16px;
+        
+        a {
+            img, svg {
+                width: 18px;
+                height: 18px;
             }
         }
     }

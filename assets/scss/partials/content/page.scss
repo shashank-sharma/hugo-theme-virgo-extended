@@ -64,10 +64,29 @@
                     color: $blue;
                     &::before {
                         content: '➭ ';
-                    }
-                }
+                                }
+        }
+    }
+}
+
+// Mobile page-operation styles
+@media (max-width: 768px) {
+    .container-page .toc .page-operation {
+        flex-direction: row;
+        gap: 12px;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 8px 16px;
+        
+        a {
+            img, svg {
+                width: 18px;
+                height: 18px;
             }
         }
+    }
+}
 
         // 滚动条宽度、颜色
         &::-webkit-scrollbar {
