@@ -283,7 +283,7 @@ aside.left {
 .home-header-place {
     position: relative;
     height: 70vh;
-    transform: translateY(-10%);
+    transform: translateY(0%);
     width: 70%;
     max-width: 1000px;
     margin: auto;
@@ -482,7 +482,7 @@ html.dark-mode {
 
 @media (max-width: 900px) {
     .home-header-place {
-        height: 60vh;
+        height: 55vh;
     }
 }
 

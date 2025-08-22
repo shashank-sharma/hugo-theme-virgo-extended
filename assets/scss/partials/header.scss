@@ -126,15 +126,7 @@
 }
 
 #header::after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: -1; /* Place it behind the content */
-    height: 10px; /* Height of animated border */
-    background-image: linear-gradient(90deg, rgb(13, 110, 253), rgb(142, 214, 251) 50%, rgb(211, 46, 157));
-    background-size: 300% 100%; /* Extend the background to allow animation effect */
-    animation: slideGradient 3s infinite linear alternate;
+    content: none;
 }
 
 @keyframes slideGradient {

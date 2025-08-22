@@ -1,22 +1,10 @@
 export default function initDeviceStatus(apiEndpoint) {
     const deviceTemplate = `
-      <div class="holo-badge">
-        <div class="holo-content">
-          <div class="holo-header">
-            <div class="holo-icon-test">
-            </div>
-            <div class="holo-title"></div>
-          </div>
-          <div class="holo-body">
-            <p class="holo-sync"></p>
-            <div class="holo-status">
-              <span class="holo-status-dot"></span>
-              <span class="holo-status-text"></span>
-            </div>
-            <p class="holo-current-app"></p>
-          </div>
-        </div>
-        <div class="holo-glow"></div>
+      <div class="device-chip" title="">
+        <span class="device-dot"></span>
+        <span class="device-icon" aria-hidden="true"></span>
+        <span class="device-app"></span>
+        <span class="device-sync"></span>
       </div>
     `;
   
@@ -24,68 +12,110 @@ export default function initDeviceStatus(apiEndpoint) {
         const template = document.createElement('template');
         template.innerHTML = deviceTemplate.trim();
         const element = template.content.firstChild;
-    
-        element.addEventListener('click', function() {
-          if (window.innerWidth <= 980) {
-            const allBadges = document.querySelectorAll('.holo-badge');
-            const wasExpanded = this.classList.contains('expanded');
-    
-            // Toggle expanded state for clicked badge
-            this.classList.toggle('expanded');
-    
-            // Adjust margins for all badges
-            if (wasExpanded) {
-              // Collapse
-              allBadges.forEach(badge => {
-                badge.style.marginBottom = '-40px';
-                badge.classList.remove('expanded');
-              });
-            } else {
-              // Expand
-              allBadges.forEach(badge => {
-                badge.style.marginBottom = '0px';
-              });
-              this.classList.add('expanded');
-            }
-          }
-        });
-    
         return element;
       }
   
     function updateDeviceStatus(device, element) {
-      element.querySelector('.holo-title').textContent = device.name;
-      const syncElement = element.querySelector('.holo-sync');
-      const statusDot = element.querySelector('.holo-status-dot');
-      const statusText = element.querySelector('.holo-status-text');
-      const currentAppText = element.querySelector('.holo-current-app');
-      
+      const dot = element.querySelector('.device-dot');
+      const icon = element.querySelector('.device-icon');
+      const app = element.querySelector('.device-app');
+      const sync = element.querySelector('.device-sync');
+
+      const fullTimestamp = formatFullDate(device.last_sync);
+      const relative = formatRelativeTime(device.last_sync);
+
+      // Tooltip with name and full timestamp (custom only, no native title)
+      const tooltip = `${device.name || 'Unknown'} • ${fullTimestamp}`;
+      element.removeAttribute('title');
+      element.setAttribute('data-tooltip', tooltip);
+
       if (device.is_public) {
         element.classList.remove('not-available');
-        syncElement.textContent = `Last Sync: ${formatDate(device.last_sync)}`;
-        statusDot.className = `holo-status-dot ${device.is_online ? 'online' : 'offline'}`;
-        statusText.textContent = device.is_online ? 'Online' : 'Offline';
-        currentAppText.textContent = device.current_app ? device.current_app : '';
+        dot.className = `device-dot ${device.is_online ? 'online' : 'offline'}`;
+        app.textContent = device.current_app ? truncateMiddle(device.current_app, 26) : '';
+        sync.textContent = relative;
       } else {
         element.classList.add('not-available');
-        syncElement.textContent = 'Not Available';
-        statusDot.className = 'holo-status-dot not-available';
-        statusText.textContent = 'Private';
-        currentAppText.textContent = 'Private';
+        dot.className = 'device-dot private';
+        app.textContent = 'Private';
+        sync.textContent = '';
       }
+
+      // Minimal icon: first letter of device name
+      const initial = (device.name || '?').trim().charAt(0).toUpperCase();
+      icon.textContent = initial;
+      icon.setAttribute('aria-label', device.name || 'Device');
+
+      // Remove any native titles from children to avoid default tooltip
+      const children = element.querySelectorAll('*');
+      children.forEach(child => {
+        child.removeAttribute('title');
+      });
     }
   
-    function formatDate(dateString) {
+    function createSkeletonChip() {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'device-chip skeleton';
+      wrapper.innerHTML = `
+        <span class="device-dot"></span>
+        <span class="device-icon"></span>
+        <span class="device-app"></span>
+        <span class="device-sync"></span>
+      `;
+      return wrapper;
+    }
+
+    function renderSkeletons(count = 3) {
+      const container = document.getElementById('device-container');
+      if (!container) return;
+      container.style.display = 'flex';
+      container.innerHTML = '';
+      for (let i = 0; i < count; i += 1) {
+        container.appendChild(createSkeletonChip());
+      }
+    }
+
+    function formatFullDate(dateString) {
       if (!dateString) return 'Never';
-      return new Date(dateString).toLocaleString();
+      const d = new Date(dateString);
+      return d.toLocaleString();
+    }
+
+    function formatRelativeTime(dateString) {
+      if (!dateString) return 'never';
+      const now = Date.now();
+      const then = new Date(dateString).getTime();
+      const diff = Math.max(0, now - then);
+
+      const minute = 60 * 1000;
+      const hour = 60 * minute;
+      const day = 24 * hour;
+
+      if (diff < minute) return 'just now';
+      if (diff < hour) return `${Math.floor(diff / minute)}m ago`;
+      if (diff < day) return `${Math.floor(diff / hour)}h ago`;
+      return `${Math.floor(diff / day)}d ago`;
+    }
+
+    function truncateMiddle(text, max) {
+      if (!text) return '';
+      if (text.length <= max) return text;
+      const half = Math.floor((max - 1) / 2);
+      return text.slice(0, half) + '…' + text.slice(text.length - half);
     }
   
     function fetchAndUpdateDevices() {
+        // show skeletons before request (first load or refresh)
+        renderSkeletons(3);
         fetch(apiEndpoint)
           .then(response => response.json())
           .then(data => {
             const container = document.getElementById('device-container');
             container.innerHTML = '';
+            if (!data || !Array.isArray(data.devices) || data.devices.length === 0) {
+              container.style.display = 'none';
+              return;
+            }
             const sortedDevices = data.devices.sort((a, b) => {
 
               const getDateValue = (device) => {
@@ -109,8 +139,15 @@ export default function initDeviceStatus(apiEndpoint) {
               updateDeviceStatus(device, deviceElement);
               container.appendChild(deviceElement);
             });
+            container.style.display = 'flex';
           })
-          .catch(error => console.error('Error fetching device status:', error));
+          .catch(error => {
+            console.error('Error fetching device status:', error);
+            const container = document.getElementById('device-container');
+            if (container) {
+              container.style.display = 'none';
+            }
+          });
       }
   
     fetchAndUpdateDevices();

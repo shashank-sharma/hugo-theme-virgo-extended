@@ -79,13 +79,140 @@
 }
 
 .device-container {
-    position: absolute;
+    position: fixed;
     display: flex;
-    padding-top: 20px;
-    flex-wrap: wrap;
-    flex-direction: column;
-    gap: 20px;
-    z-index: 2;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 8px;
+    z-index: 10;
+    top: 12px;
+    right: 12px;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+/* Minimal device chip styles */
+.device-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    color: #4b5563;
+    opacity: 0.92;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: .01em;
+    user-select: none;
+    cursor: default;
+    position: relative;
+}
+
+.device-chip.skeleton {
+    pointer-events: none;
+    color: transparent;
+}
+
+.device-chip.skeleton .device-dot,
+.device-chip.skeleton .device-icon,
+.device-chip.skeleton .device-app,
+.device-chip.skeleton .device-sync {
+    position: relative;
+    overflow: hidden;
+    background: #f3f4f6;
+    color: transparent;
+}
+
+.device-chip.skeleton .device-dot {
+    width: 6px;
+    height: 6px;
+}
+
+.device-chip.skeleton .device-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.device-chip.skeleton .device-app {
+    width: 100px;
+    height: 10px;
+}
+
+.device-chip.skeleton .device-sync {
+    width: 48px;
+    height: 10px;
+}
+
+.device-chip.skeleton .device-dot::after,
+.device-chip.skeleton .device-icon::after,
+.device-chip.skeleton .device-app::after,
+.device-chip.skeleton .device-sync::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, rgba(0,0,0,0), rgba(209,213,219,0.7), rgba(0,0,0,0));
+    animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.device-chip.not-available {
+    opacity: 0.85;
+    filter: grayscale(100%);
+}
+
+.device-dot {
+    width: 6px;
+    height: 6px;
+    background: #9ca3af; /* default gray */
+}
+
+.device-dot.online { background: #10b981; }
+.device-dot.offline { background: #ef4444; }
+.device-dot.private { background: #9ca3af; }
+
+.device-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    background: #e5e7eb;
+    color: #111827;
+    font-weight: 600;
+    font-size: 11px;
+}
+
+.device-app {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.device-sync {
+    color: #6b7280;
+}
+
+/* Tooltip */
+.device-chip[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.98);
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+    padding: 6px 8px;
+    font-size: 12px;
+    z-index: 9999;
 }
 
 .holo-badge {
@@ -254,7 +381,7 @@
     .device-container {
         position: relative;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         gap: 10px;
     }
@@ -296,6 +423,27 @@
     .holo-status-text {
       flex-grow: 1;
       text-align: right;
+    }
+
+    /* Smaller chips on mobile */
+    .device-chip {
+        padding: 4px 6px;
+        font-size: 11px;
+    }
+
+    .device-dot {
+        width: 5px;
+        height: 5px;
+    }
+
+    .device-icon {
+        width: 14px;
+        height: 14px;
+        font-size: 10px;
+    }
+
+    .device-app {
+        max-width: 90px;
     }
   }
 

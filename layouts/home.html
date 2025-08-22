@@ -8,46 +8,43 @@
             <div class="block block-right"></div>
             <div class="block block-top"></div>
             <div class="block block-bottom"></div>
-          </div>
+        </div>
     </div>
     <!-- 第一层级 -->
 
-<!-- Note that the content for index.html, as a sort of list page, will pull from content/_index.md-->
-   <div class="content-md">
-       {{.Content}}
-   </div>
+    <!-- Removed content-md block to hide homepage markdown content -->
     {{- partial "partials/_contact.html" . -}}
     <div class="device-container" id="device-container">
     </div>
     <div class="content" style="display: normal;">
 
-            {{ if .Site.Params.video.src }}
-            <div class="home-header-place">
-                <div class="home-header-vector-body" id="home-header-vector-body">
-                </div>
+        {{ if .Site.Params.video.src }}
+        <div class="home-header-place">
+            <div class="home-header-vector-body" id="home-header-vector-body">
             </div>
-            {{ else if .Site.Params.img.src }}
-                <!-- <img src="/imgs/{{ .Site.Params.img.src }}" width="{{ with .Site.Params.img.width }}{{.}}{{end}}" /> -->
-                <div class="home-header-place">
-                    <div class="home-header-vector-background" id="home-header-vector-background">
-                        <div class="background-gradient"></div>
-                        <img class="home-header-vector" src="/img/header-background.png"/>
-                        <img class="home-header-vector" src="/img/header-moon.png"/>
-                    </div>
-                    <div class="home-header-vector-body" id="home-header-vector-body">
-                        <div class="pointer-anime" id="pointer-anime"></div>
-                        <div class="pointer-moon" id="pointer-moon"></div>
-                        <img class="home-header-vector floating-max" src="/img/header-blur-one.png"/>
-                        <img class="home-header-vector floating" src="/img/header-adventure.png"/>
-                        <img class="home-header-vector floating-less" src="/img/header-anime.png"/>
-                        <img class="home-header-vector floating-min" src="/img/header-blur-two.png"/>
-                    </div>
-                </div>
-            {{ else if .Site.Params.img.notImgButWords }}
-                <div class="words">{{ .Site.Params.img.words | markdownify }}</div>
-            {{ else }}
-                <img src="/imgs/tux.jpg" width="880" />
-            {{ end }}
+        </div>
+        {{ else if .Site.Params.img.src }}
+        <!-- <img src="/imgs/{{ .Site.Params.img.src }}" width="{{ with .Site.Params.img.width }}{{.}}{{end}}" /> -->
+        <div class="home-header-place">
+            <div class="home-header-vector-background" id="home-header-vector-background">
+                <div class="background-gradient"></div>
+                <img class="home-header-vector" src="/img/header-background.png" />
+                <img class="home-header-vector" src="/img/header-moon.png" />
+            </div>
+            <div class="home-header-vector-body" id="home-header-vector-body">
+                <div class="pointer-anime" id="pointer-anime"></div>
+                <div class="pointer-moon" id="pointer-moon"></div>
+                <img class="home-header-vector floating-max" src="/img/header-blur-one.png" />
+                <img class="home-header-vector floating" src="/img/header-adventure.png" />
+                <img class="home-header-vector floating-less" src="/img/header-anime.png" />
+                <img class="home-header-vector floating-min" src="/img/header-blur-two.png" />
+            </div>
+        </div>
+        {{ else if .Site.Params.img.notImgButWords }}
+        <div class="words">{{ .Site.Params.img.words | markdownify }}</div>
+        {{ else }}
+        <img src="/imgs/tux.jpg" width="880" />
+        {{ end }}
     </div>
 </div>
 {{ end }}
