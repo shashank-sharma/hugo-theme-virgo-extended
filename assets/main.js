@@ -57,6 +57,28 @@ if (params.params.video.src && isHomePage()) {
     const lightVideos = params.params.video.src || [];
     const darkVideos = params.params.video.darksrc || lightVideos; // Fallback to light videos if dark not available
     homeVideo(lightVideos, darkVideos, "home-header-vector-body")
+
+    // Bind overlay button to open active world
+    const btn = document.getElementById('home-feature-btn');
+    if (btn) {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Get current index and source matching current mode
+            const isDark = document.documentElement.classList.contains('dark-mode') || document.documentElement.hasAttribute('data-darkreader-scheme');
+            const sources = isDark ? (params.params.video.darksrc || lightVideos) : lightVideos;
+            let idx = 0;
+            const stored = localStorage.getItem('video_index');
+            if (stored !== null) {
+                const parsed = parseInt(stored);
+                if (!Number.isNaN(parsed)) idx = parsed % sources.length;
+            }
+            const src = sources[idx] || sources[0] || '';
+            // Derive slug from filename
+            const match = src.match(/\/([^\/]+)\.(mp4|webm|mov)$/i);
+            const slug = match ? match[1] : 'world';
+            window.location.href = `/worlds/${slug}/`;
+        });
+    }
 }
 
 greet();

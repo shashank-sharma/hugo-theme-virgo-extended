@@ -13,7 +13,7 @@
     <!-- 第一层级 -->
 
     <!-- Removed content-md block to hide homepage markdown content -->
-    {{- partial "partials/_contact.html" . -}}
+
     <div class="device-container" id="device-container">
     </div>
     <div class="content" style="display: normal;">
@@ -46,5 +46,13 @@
         <img src="/imgs/tux.jpg" width="880" />
         {{ end }}
     </div>
+
+    {{ if and .Site.Params.video.feature .Site.Params.video.feature.enabled }}
+    <div class="home-feature">
+        <div class="home-feature__text">{{ .Site.Params.video.feature.teaserText }}</div>
+        <a id="home-feature-btn" class="home-feature__btn" href="#">{{ .Site.Params.video.feature.buttonText }}</a>
+    </div>
+    {{ end }}
+
 </div>
 {{ end }}

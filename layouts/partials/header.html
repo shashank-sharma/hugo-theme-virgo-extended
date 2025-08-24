@@ -15,6 +15,7 @@
     <div class="some">
         {{ .Site.Params.slogan }}
     </div>
+    {{- partial "partials/_contact.html" . -}}
 </div>
 
 {{ else }}

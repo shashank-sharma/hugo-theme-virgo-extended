@@ -1,4 +1,9 @@
 export default function initDeviceStatus(apiEndpoint) {
+    // Track last toast to avoid noisy repeats across refreshes
+    let lastToastKey = null;
+    let lastToastShownAt = 0;
+    const TOAST_DEDUP_WINDOW_MS = 60 * 1000; // 1 minute
+
     const deviceTemplate = `
       <div class="device-chip" title="">
         <span class="device-dot"></span>
@@ -103,6 +108,48 @@ export default function initDeviceStatus(apiEndpoint) {
       const half = Math.floor((max - 1) / 2);
       return text.slice(0, half) + '…' + text.slice(text.length - half);
     }
+
+    function wasOnlineRecently(device, withinMs = 3 * 60 * 1000) {
+      if (!device) return false;
+      const lastSync = device.last_sync ? new Date(device.last_sync).getTime() : 0;
+      if (!lastSync) return false;
+      const now = Date.now();
+      return device.is_online === true && (now - lastSync) <= withinMs;
+    }
+
+    function showToast(message) {
+      if (!message) return;
+      const now = Date.now();
+      if (now - lastToastShownAt < TOAST_DEDUP_WINDOW_MS) return;
+      lastToastShownAt = now;
+
+      const toast = document.createElement('div');
+      toast.className = 'device-toast';
+      toast.textContent = message;
+
+      // Prefer attaching to device-container to keep consistent stacking
+      const container = document.getElementById('device-container');
+      if (container && container.parentElement) {
+        container.parentElement.appendChild(toast);
+      } else {
+        document.body.appendChild(toast);
+      }
+
+      // Force reflow then animate in
+      // eslint-disable-next-line no-unused-expressions
+      toast.offsetHeight;
+      requestAnimationFrame(() => toast.classList.add('enter'));
+
+      // Auto-hide after a short duration with fade-out
+      const DISPLAY_MS = 4500;
+      const FADE_MS = 350;
+      setTimeout(() => {
+        toast.classList.add('hide');
+        setTimeout(() => {
+          if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
+        }, FADE_MS + 50);
+      }, DISPLAY_MS);
+    }
   
     function fetchAndUpdateDevices() {
         // show skeletons before request (first load or refresh)
@@ -140,6 +187,19 @@ export default function initDeviceStatus(apiEndpoint) {
               container.appendChild(deviceElement);
             });
             container.style.display = 'flex';
+
+            // Show ephemeral toast for a recently-online public device
+            const recent = sortedDevices.find(d => d && d.is_public && wasOnlineRecently(d));
+            if (recent) {
+              const app = recent.current_app ? truncateMiddle(recent.current_app, 40) : null;
+              const deviceName = recent.name || 'device';
+              const key = `${deviceName}|${app || ''}|${recent.last_sync || ''}`;
+              if (key !== lastToastKey) {
+                lastToastKey = key;
+                const baseText = app ? `I am Using ${app} right now` : `Online right now`;
+                showToast(baseText);
+              }
+            }
           })
           .catch(error => {
             console.error('Error fetching device status:', error);

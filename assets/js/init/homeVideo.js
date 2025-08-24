@@ -147,9 +147,15 @@ export default function renderRandomVideo(lightVideoSources, darkVideoSources, c
         // Show initial video
         const initialVideo = createVideoElement(getCurrentVideo());
         container.appendChild(initialVideo);
+        // Persist current index so other UI (e.g., overlay button) can read it
+        localStorage.setItem("video_index", currentIndex);
         
         // Add click handler for manual transitions
-        container.addEventListener('click', () => transitionToNewVideo());
+        container.addEventListener('click', () => {
+            transitionToNewVideo();
+            // Update persisted index after transition
+            localStorage.setItem("video_index", currentIndex);
+        });
         
         // Listen for dark mode changes
         const observer = new MutationObserver(handleModeChange);
