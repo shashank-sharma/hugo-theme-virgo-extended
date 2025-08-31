@@ -1,0 +1,27 @@
+{{/*
+Usage: {{ partial "timeago.html" (dict "date" .Date) }}
+Falls back from years → months → days → hours → minutes → just now.
+*/}}
+{{ $d := .date }}
+{{ if not $d }}{{/* If no date supplied, show nothing */}}{{- else -}}
+{{ $diff := sub now.Unix $d.Unix }}
+{{ $minute := 60 }}
+{{ $hour := mul $minute 60 }}
+{{ $day := mul $hour 24 }}
+{{ $month := mul $day 30 }}
+{{ $year := mul $day 365 }}
+
+{{ if lt $diff $minute }}
+just now
+{{ else if lt $diff $hour }}
+{{ $m := div $diff $minute }}{{ $m }} minute{{ if gt $m 1 }}s{{ end }} ago
+{{ else if lt $diff $day }}
+{{ $h := div $diff $hour }}{{ $h }} hour{{ if gt $h 1 }}s{{ end }} ago
+{{ else if lt $diff $month }}
+{{ $dd := div $diff $day }}{{ $dd }} day{{ if gt $dd 1 }}s{{ end }} ago
+{{ else if lt $diff $year }}
+{{ $mm := div $diff $month }}{{ $mm }} month{{ if gt $mm 1 }}s{{ end }} ago
+{{ else }}
+{{ $yy := div $diff $year }}{{ $yy }} year{{ if gt $yy 1 }}s{{ end }} ago
+{{ end }}
+{{ end }}

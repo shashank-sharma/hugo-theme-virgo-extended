@@ -3,6 +3,9 @@ export default function initDeviceStatus(apiEndpoint) {
     let lastToastKey = null;
     let lastToastShownAt = 0;
     const TOAST_DEDUP_WINDOW_MS = 60 * 1000; // 1 minute
+    let toastPending = false;
+    let windowLoaded = document.readyState === 'complete';
+    window.addEventListener('load', () => { windowLoaded = true; });
 
     const deviceTemplate = `
       <div class="device-chip" title="">
@@ -119,36 +122,49 @@ export default function initDeviceStatus(apiEndpoint) {
 
     function showToast(message) {
       if (!message) return;
+      if (toastPending) return;
       const now = Date.now();
       if (now - lastToastShownAt < TOAST_DEDUP_WINDOW_MS) return;
-      lastToastShownAt = now;
 
-      const toast = document.createElement('div');
-      toast.className = 'device-toast';
-      toast.textContent = message;
+      const display = () => {
+        toastPending = false;
+        lastToastShownAt = Date.now();
 
-      // Prefer attaching to device-container to keep consistent stacking
-      const container = document.getElementById('device-container');
-      if (container && container.parentElement) {
-        container.parentElement.appendChild(toast);
-      } else {
-        document.body.appendChild(toast);
-      }
+        const toast = document.createElement('div');
+        toast.className = 'device-toast';
+        toast.textContent = message;
 
-      // Force reflow then animate in
-      // eslint-disable-next-line no-unused-expressions
-      toast.offsetHeight;
-      requestAnimationFrame(() => toast.classList.add('enter'));
+        // Prefer attaching to device-container to keep consistent stacking
+        const container = document.getElementById('device-container');
+        if (container && container.parentElement) {
+          container.parentElement.appendChild(toast);
+        } else {
+          document.body.appendChild(toast);
+        }
 
-      // Auto-hide after a short duration with fade-out
-      const DISPLAY_MS = 4500;
-      const FADE_MS = 350;
-      setTimeout(() => {
-        toast.classList.add('hide');
+        // Force reflow then animate in
+        // eslint-disable-next-line no-unused-expressions
+        toast.offsetHeight;
+        requestAnimationFrame(() => toast.classList.add('enter'));
+
+        // Auto-hide after a short duration with fade-out
+        const DISPLAY_MS = 4500;
+        const FADE_MS = 350;
         setTimeout(() => {
-          if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
-        }, FADE_MS + 50);
-      }, DISPLAY_MS);
+          toast.classList.add('hide');
+          setTimeout(() => {
+            if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
+          }, FADE_MS + 50);
+        }, DISPLAY_MS);
+      };
+
+      // Ensure we show only after page load, plus 1s delay
+      toastPending = true;
+      if (windowLoaded) {
+        setTimeout(display, 1000);
+      } else {
+        window.addEventListener('load', () => setTimeout(display, 1000), { once: true });
+      }
     }
   
     function fetchAndUpdateDevices() {

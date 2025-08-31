@@ -75,8 +75,11 @@ if (params.params.video.src && isHomePage()) {
             const src = sources[idx] || sources[0] || '';
             // Derive slug from filename
             const match = src.match(/\/([^\/]+)\.(mp4|webm|mov)$/i);
-            const slug = match ? match[1] : 'world';
-            window.location.href = `/worlds/${slug}/`;
+            const derived = match ? match[1] : 'world';
+            // Allow mapping multiple slugs to one destination via config
+            const map = (params.params.video && params.params.video.worldmap) || {};
+            const dest = map[derived] || derived;
+            window.open(`/worlds/${dest}/`, '_blank', 'noopener');
         });
     }
 }
