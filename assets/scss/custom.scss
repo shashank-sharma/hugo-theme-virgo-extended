@@ -680,5 +680,20 @@ html[data-darkreader-scheme="dark"] .giscus {
     margin-top: 0.25rem;
     margin-bottom: 0.35rem;
     border: 0;
-    box-shadow: rgba(115, 115, 115, 0.35) 0px 23px 50px 20px;
+    box-shadow: rgba(115, 115, 115, 0.15) 0px 0px 40px 10px;
+}
+
+.blog-header-figure {
+    margin: 0.25rem 0 0.35rem 0;
+}
+
+.blog-header-figure .blog-header-image {
+    margin: 0;
+}
+
+.blog-header-caption {
+    font-size: 0.12rem;
+    color: #666;
+    text-align: center;
+    margin-top: 0.08rem;
 }

@@ -8,6 +8,7 @@ import enhanceOrgMode from './js/init/enhanceOrgMode';
 import enhanceMarkdown from './js/init/enhanceMarkdown';
 import runMisc from './js/init/runMisc';
 import BlogHeader from './js/init/blogHeader';
+import initHeaderImageCaption from './js/init/initHeaderImageCaption';
 import * as params from '@params';
 
 function isHomePage() {
@@ -84,11 +85,13 @@ if (params.params.video.src && isHomePage()) {
     }
 }
 
+// Initialize common behaviors
 greet();
 enhanceOrgMode();
 initCodeBlock();
 enhanceMarkdown();
 initImage();
+initHeaderImageCaption();
 initEventBinding();
 runMisc();
 BlogHeader.init();
