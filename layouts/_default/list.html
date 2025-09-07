@@ -31,6 +31,14 @@
             </div>
             {{ end }}
             {{ end }}
+
+            {{/* Render time-mountain at the bottom for posts section */}}
+            {{ if and (ne .Kind "taxonomy") (eq .Section "posts") }}
+            {{ $allPosts := where .Site.RegularPages "Section" "posts" }}
+            <div class="posts-time-mountain">
+                {{ partial "time-mountain.html" (dict "pages" $allPosts) }}
+            </div>
+            {{ end }}
     </div>
 
     <div class="container-pagination">

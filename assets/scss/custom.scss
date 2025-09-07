@@ -119,9 +119,8 @@ a {
     text-decoration: underline;
 
     &:hover {
-        text-decoration: none;
+        text-decoration: underline;
         color: $link-hover-color;
-        text-shadow: 0px 0px 1px $link-hover-color;
     }
 }
 

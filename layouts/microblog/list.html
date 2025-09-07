@@ -6,55 +6,61 @@
 
     <div class="content">
         {{ .Content }}
-    </div>
 
-    <div class="microblog-grid">
-        {{ $pages := .Paginator.Pages }}
-        {{ $currentYear := "" }}
-        {{ range $pages }}
-        {{ $postYear := .Date.Format "2006" }}
-        {{ if ne $postYear $currentYear }}
-        {{ $currentYear = $postYear }}
-        <div class="year-header">
-            <h3>{{ $postYear }}</h3>
-        </div>
-        {{ end }}
-        <article class="microblog-card">
-            <a href="{{ .Permalink }}" class="card-link">
-                <div class="card-date">
-                    <time datetime="{{ .Date.Format " 2006-01-02" }}">
-                        {{ .Date.Format "Jan 02, 2006" }}
-                    </time>
-                </div>
+        <div class="microblog-grid">
+            {{ $pages := .Paginator.Pages }}
+            {{ $currentYear := "" }}
+            {{ range $pages }}
+            {{ $postYear := .Date.Format "2006" }}
+            {{ if ne $postYear $currentYear }}
+            {{ $currentYear = $postYear }}
+            <div class="year-header">
+                <h3>{{ $postYear }}</h3>
+            </div>
+            {{ end }}
+            <article class="microblog-card">
+                <a href="{{ .Permalink }}" class="card-link">
+                    <div class="card-date">
+                        <time datetime="{{ .Date.Format " 2006-01-02" }}">
+                            {{ .Date.Format "Jan 02, 2006" }}
+                        </time>
+                    </div>
 
-                <h3 class="card-title">{{ .Title }}</h3>
+                    <h3 class="card-title">{{ .Title }}</h3>
 
-                <div class="card-preview">
-                    {{ $content := .Content | plainify }}
-                    {{ $preview := truncate 150 $content }}
-                    {{ $preview }}
-                </div>
+                    <div class="card-preview">
+                        {{ $content := .Content | plainify }}
+                        {{ $preview := truncate 150 $content }}
+                        {{ $preview }}
+                    </div>
 
-                <div class="card-meta">
-                    {{ with .Params.tags }}
-                    <div class="card-tags">
-                        {{ range first 3 . }}
-                        <span class="tag">{{ . }}</span>
+                    <div class="card-meta">
+                        {{ with .Params.tags }}
+                        <div class="card-tags">
+                            {{ range first 3 . }}
+                            <span class="tag">{{ . }}</span>
+                            {{ end }}
+                        </div>
                         {{ end }}
-                    </div>
-                    {{ end }}
 
-                    <div class="read-more">
-                        <span>Read more →</span>
+                        <div class="read-more">
+                            <span>Read more →</span>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </article>
-        {{ end }}
-    </div>
+                </a>
+            </article>
+            {{ end }}
+        </div>
 
-    <div class="container-pagination">
-        {{ template "_internal/pagination.html" . }}
+        {{/* Time-mountain for microblog section */}}
+        {{ $allMicro := where .Site.RegularPages "Section" "microblog" }}
+        <div class="microblog-time-mountain">
+            {{ partial "time-mountain.html" (dict "pages" $allMicro) }}
+        </div>
+
+        <div class="container-pagination">
+            {{ template "_internal/pagination.html" . }}
+        </div>
     </div>
 </div>
 {{ end }}

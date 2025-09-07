@@ -1,0 +1,212 @@
+{{/*
+Partial: time-mountain
+Usage: {{ partial "time-mountain.html" (dict "pages" $pages) }}
+Expects: .pages → a Pages collection (e.g., where .Site.RegularPages "Section" "posts")
+*/}}
+
+{{ $pages := .pages }}
+{{ if $pages }}
+{{ $counts := dict }}
+{{ $minYear := 9999 }}
+{{ $maxYear := 0 }}
+
+{{ range $p := $pages }}
+{{ $yStr := $p.Date.Format "2006" }}
+{{ $y := int $yStr }}
+{{ if lt $y $minYear }}{{ $minYear = $y }}{{ end }}
+{{ if gt $y $maxYear }}{{ $maxYear = $y }}{{ end }}
+
+{{ $key := printf "%d" $y }}
+
+{{ with index $counts $key }}
+{{ $counts = merge $counts (dict $key (add . 1)) }}
+{{ else }}
+{{ $counts = merge $counts (dict $key 1) }}
+{{ end }}
+{{ end }}
+
+{{ $ordered := slice }}
+{{ $yearSpan := add (sub $maxYear $minYear) 1 }}
+{{ if gt $yearSpan 0 }}
+{{ range $i := seq $yearSpan }}
+{{ $year := add $minYear (sub $i 1) }}
+{{ $key := printf "%d" $year }}
+{{ with index $counts $key }}
+{{ $ordered = $ordered | append (dict "key" $key "year" $year "count" .) }}
+{{ end }}
+{{ end }}
+{{ end }}
+
+{{ $presentYearCount := len $ordered }}
+{{ if lt $presentYearCount 8 }}
+{{ $need := sub 8 $presentYearCount }}
+{{ $leftPad := div $need 2 }}
+{{ $rightPad := sub $need $leftPad }}
+{{ $orderedPadded := slice }}
+{{ if gt $leftPad 0 }}
+{{ range $i := seq $leftPad }}
+{{ $year := add (sub $minYear $leftPad) (sub $i 1) }}
+{{ $orderedPadded = $orderedPadded | append (dict "key" (printf "%d" $year) "year" $year "count" 0) }}
+{{ end }}
+{{ end }}
+{{ range $ordered }}
+{{ $orderedPadded = $orderedPadded | append . }}
+{{ end }}
+{{ if gt $rightPad 0 }}
+{{ range $i := seq $rightPad }}
+{{ $year := add $maxYear $i }}
+{{ $orderedPadded = $orderedPadded | append (dict "key" (printf "%d" $year) "year" $year "count" 0) }}
+{{ end }}
+{{ end }}
+{{ $ordered = $orderedPadded }}
+{{ end }}
+
+{{ $num := len $ordered }}
+{{ $maxCount := 1 }}
+{{ range $b := $ordered }}
+{{ if gt $b.count $maxCount }}{{ $maxCount = $b.count }}{{ end }}
+{{ end }}
+
+<div class="mountain-skills">
+    <div class="skills-grid">
+        {{ range $index, $b := $ordered }}
+        {{ $ratio := 0.0 }}
+        {{ if gt (sub $num 1) 0 }}
+        {{ $ratio = div (mul (float $index) 1.0) (float (sub $num 1)) }}
+        {{ else }}
+        {{ $ratio = 0.5 }}
+        {{ end }}
+        {{ $position := add 10.0 (mul 80.0 $ratio) }}
+
+        {{ $h := 0.0 }}
+        {{ if gt $b.count 0 }}
+        {{ $h = div (mul (float $b.count) 4.0) (float $maxCount) }}
+        {{ if lt $h 0.6 }}{{ $h = 0.6 }}{{ end }}
+        {{ end }}
+
+        <div class="mountain {{ if eq $index 0 }}first-date{{ end }} {{ if eq (add $index 1) $num }}last-date{{ end }}"
+            style="--hours: {{ $h }}; --position: {{ $position }}; --z-index: {{ add 1 $index }}">
+            {{ if gt $b.count 0 }}
+            <div class="mountain-shape" style="--opacity: {{ div $h 8.0 }}"></div>
+            {{ end }}
+            <div class="skill-label">{{ $b.key }}</div>
+            {{ if gt $b.count 0 }}
+            <div class="skill-hours">{{ $b.count }}</div>
+            {{ end }}
+            <div class="skill-line"></div>
+        </div>
+        {{ end }}
+    </div>
+    <div class="summary">
+        <div class="summary-line">{{ len $pages }} posts across {{ $presentYearCount }} years ({{ $minYear }}–{{
+            $maxYear }})
+        </div>
+    </div>
+</div>
+
+<style>
+    .mountain-skills {
+        width: 100%;
+        max-width: 1000px;
+        height: 300px;
+        position: relative;
+        opacity: 0.5;
+        margin: 1rem auto 0;
+    }
+
+    .skills-grid {
+        height: 200px;
+        position: relative;
+        width: 100%;
+        border-bottom: 2px solid #444;
+    }
+
+    .mountain {
+        position: absolute;
+        bottom: 0;
+        left: calc(var(--position) * 1%);
+        transform: translateX(-50%);
+        z-index: calc(var(--z-index));
+    }
+
+    .mountain-shape {
+        width: 0;
+        height: 0;
+        border-left: 75px solid transparent;
+        border-right: 75px solid transparent;
+        border-bottom: calc(var(--hours) * 25px) solid;
+        border-bottom-color: rgba(68, 68, 68, 0.4);
+        transition: border-bottom-width 1s ease;
+    }
+
+    .skill-label {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        color: #444;
+        font-size: 0.08rem;
+        font-weight: 500;
+    }
+
+    .skill-hours {
+        position: absolute;
+        bottom: calc(var(--hours) * 25px + 5px);
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        color: #444;
+        font-size: 0.11rem;
+    }
+
+    .summary {
+        padding: 0.4rem 0;
+        font-size: 0.13rem;
+        text-align: center;
+        color: #666;
+    }
+
+    .summary-highlight {
+        color: #333;
+        font-weight: 400;
+    }
+
+    @media screen and (max-width: 768px) {
+        .mountain-skills {
+            max-width: 100%;
+        }
+
+        .mountain-shape {
+            border-left: 45px solid transparent;
+            border-right: 45px solid transparent;
+        }
+
+        .mountain .skill-label {
+            display: none;
+        }
+
+        .first-date .skill-label,
+        .last-date .skill-label {
+            display: block;
+            font-weight: 400;
+            padding-left: 0.3rem;
+        }
+
+        .skill-hours {
+            font-size: 0.10rem;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .mountain-shape {
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+        }
+
+        .skill-hours {
+            font-size: 0.09rem;
+        }
+    }
+</style>
+{{ end }}
