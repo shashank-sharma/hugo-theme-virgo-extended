@@ -29,12 +29,17 @@ export default function renderRandomVideo(lightVideoSources, darkVideoSources, c
 
     let currentMode = getDarkMode();
     let currentSources = currentMode ? darkVideoSources : lightVideoSources;
-    let currentIndex = Math.floor(Math.random() * currentSources.length);
+    let currentIndex = 0;
     let preloadedVideos = {};
     
-    // Load stored video index
+    // Load stored video index and advance to next video on each refresh
     if (localStorage.getItem("video_index") !== null) {
-        currentIndex = parseInt(localStorage.getItem("video_index"));
+        const storedIndex = parseInt(localStorage.getItem("video_index"));
+        // Advance to next video index on page refresh
+        currentIndex = (storedIndex + 1) % currentSources.length;
+    } else {
+        // First time visit - start with random video
+        currentIndex = Math.floor(Math.random() * currentSources.length);
     }
 
     function getDarkMode() {
@@ -59,7 +64,7 @@ export default function renderRandomVideo(lightVideoSources, darkVideoSources, c
         const sources = getCurrentVideoSources();
         // Ensure index is within bounds for current mode
         if (currentIndex >= sources.length) {
-            currentIndex = 0;
+            currentIndex = currentIndex % sources.length;
         }
         return sources[currentIndex];
     }
