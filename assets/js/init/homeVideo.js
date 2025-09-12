@@ -1,3 +1,5 @@
+import { initLoader } from './loader';
+
 export default function renderRandomVideo(lightVideoSources, darkVideoSources, containerId) {
     // Validate inputs
     if (!Array.isArray(lightVideoSources) || lightVideoSources.length === 0) {
@@ -16,8 +18,8 @@ export default function renderRandomVideo(lightVideoSources, darkVideoSources, c
         return;
     }
 
-    const loadingScreen = document.getElementById('loading-screen');
-    if (!loadingScreen) {
+    const loader = initLoader();
+    if (!loader) {
         console.error('Loading screen element not found');
         return;
     }
@@ -125,12 +127,7 @@ export default function renderRandomVideo(lightVideoSources, darkVideoSources, c
     }
 
     function hideLoadingScreen() {
-        setTimeout(() => {
-            loadingScreen.classList.add('closing');
-            setTimeout(() => {
-                loadingScreen.remove();
-            }, 1000);
-        }, 1000);
+        setTimeout(() => loader.hide(), 280);
     }
 
     // Preload both light and dark videos

@@ -9,6 +9,7 @@
             <div class="block block-top"></div>
             <div class="block block-bottom"></div>
         </div>
+        <div class="loading-tiles" aria-hidden="true"></div>
     </div>
     <!-- 第一层级 -->
 
@@ -16,8 +17,11 @@
 
     <div class="device-container" id="device-container">
     </div>
-    <div class="content" style="display: normal;">
+    <div class="content" style="display: normal; position: relative;">
 
+        <div id="constellation-overlay" class="constellation-overlay"></div>
+        <canvas id="constellation-info-star" class="constellation-info-star" width="60" height="60"
+            title="Learn about the constellation"></canvas>
         {{ if .Site.Params.video.src }}
         <div class="home-header-place">
             <div class="home-header-vector-body" id="home-header-vector-body">

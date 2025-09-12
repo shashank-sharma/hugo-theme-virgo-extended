@@ -9,11 +9,14 @@
 
         .icons {
             position: relative;
-            z-index: 2;
             padding: 4px 0;
             display: flex;
             justify-content: flex-start;
             align-items: center;
+        }
+
+        .tooltip {
+            z-index: 99;
         }
 
         a {
