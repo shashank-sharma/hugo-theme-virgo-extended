@@ -49,8 +49,9 @@
             {{ .ReadingTime }} min</span>
     </div>
 
+    {{- partial "partials/_page-operation.html" . -}}
+
     <div class="toc">
-        {{- partial "partials/_page-operation.html" . -}}
         {{ $.TableOfContents }}
     </div>
 

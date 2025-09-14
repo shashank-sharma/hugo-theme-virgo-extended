@@ -510,6 +510,7 @@
     z-index: 1000;
     transition: all 0.3s ease;
     border-radius: 50%;
+    display: none; /* Hidden by default, shown only when constellation loads successfully */
 }
 
 .constellation-info-star:hover {

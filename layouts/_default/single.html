@@ -122,10 +122,11 @@
         {{ end }}
     </div>
 
+    {{ if and .IsPage (not $IsSecrets) }}
+    {{- partial "partials/_page-operation.html" . -}}
+    {{end}}
+
     <div class="toc">
-        {{ if and .IsPage (not $IsSecrets) }}
-        {{- partial "partials/_page-operation.html" . -}}
-        {{end}}
         {{ $.TableOfContents }}
     </div>
 

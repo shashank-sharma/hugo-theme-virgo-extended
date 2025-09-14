@@ -157,18 +157,34 @@ class SessionConstellation {
                 const data = await response.json();
                 if (data && Array.isArray(data.sessions) && data.sessions.length > 0) {
                     this.processSessions(data.sessions);
+                    // Call success callback if provided
+                    if (typeof this.options.onLoadSuccess === 'function') {
+                        this.options.onLoadSuccess();
+                    }
                 } else {
                     console.error("API response is missing a 'sessions' array or it is empty. Constellation will not be rendered.");
                     this.destroy();
+                    // Call failure callback if provided
+                    if (typeof this.options.onLoadFailure === 'function') {
+                        this.options.onLoadFailure();
+                    }
                 }
             } catch (error) {
                 console.error("Failed to fetch constellation data. Constellation will not be rendered:", error);
                 this.destroy();
+                // Call failure callback if provided
+                if (typeof this.options.onLoadFailure === 'function') {
+                    this.options.onLoadFailure();
+                }
             }
         } else {
             // If no API endpoint is provided, do not render the constellation.
             console.warn("No API endpoint provided for constellation. It will not be rendered.");
             this.destroy();
+            // Call failure callback if provided
+            if (typeof this.options.onLoadFailure === 'function') {
+                this.options.onLoadFailure();
+            }
         }
     }
     

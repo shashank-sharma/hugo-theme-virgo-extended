@@ -27,6 +27,13 @@
             <div class="home-header-vector-body" id="home-header-vector-body">
             </div>
         </div>
+        {{ if and .Site.Params.video.feature .Site.Params.video.feature.enabled }}
+        <div class="home-feature">
+            <div class="home-feature__text">{{ .Site.Params.video.feature.teaserText }}</div>
+            <a id="home-feature-btn" class="home-feature__btn" href="#">{{ .Site.Params.video.feature.buttonText
+                }}</a>
+        </div>
+        {{ end }}
         {{ else if .Site.Params.img.src }}
         <!-- <img src="/imgs/{{ .Site.Params.img.src }}" width="{{ with .Site.Params.img.width }}{{.}}{{end}}" /> -->
         <div class="home-header-place">
@@ -50,13 +57,6 @@
         <img src="/imgs/tux.jpg" width="880" />
         {{ end }}
     </div>
-
-    {{ if and .Site.Params.video.feature .Site.Params.video.feature.enabled }}
-    <div class="home-feature">
-        <div class="home-feature__text">{{ .Site.Params.video.feature.teaserText }}</div>
-        <a id="home-feature-btn" class="home-feature__btn" href="#">{{ .Site.Params.video.feature.buttonText }}</a>
-    </div>
-    {{ end }}
 
 </div>
 {{ end }}

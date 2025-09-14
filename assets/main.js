@@ -83,7 +83,7 @@ if (params.params.video.src && isHomePage()) {
                 ];
             };
 
-            initConstellation(overlay, { 
+            const constellationCleanup = initConstellation(overlay, { 
                 opacity: 0.4,
                 hoverOpacity: 1.0,
                 avoidZones: getAvoidZones(), // Pass initial zones
@@ -98,10 +98,28 @@ if (params.params.video.src && isHomePage()) {
                 maxStarSize: isMobile ? 7 : 15,
                 sessionRadius: isMobile ? 50 : 120,
                 spacingMultiplier: 2.0, // Increased to prevent overlap
-                sessionPadding: 30 // Extra distance between session clusters
+                sessionPadding: 30, // Extra distance between session clusters
+                // Callback for successful loading
+                onLoadSuccess: () => {
+                    // Show constellation info star only when constellation loads successfully
+                    initConstellationInfoStar();
+                },
+                onLoadFailure: () => {
+                    // Hide constellation info star if constellation fails to load
+                    const infoStar = document.getElementById('constellation-info-star');
+                    if (infoStar) {
+                        infoStar.style.display = 'none';
+                    }
+                }
             });
         }
     });
+    } else {
+        // No constellation API endpoint configured, hide the info star
+        const infoStar = document.getElementById('constellation-info-star');
+        if (infoStar) {
+            infoStar.style.display = 'none';
+        }
     }
 
     // Bind overlay button to open active world
@@ -130,23 +148,15 @@ if (params.params.video.src && isHomePage()) {
     }
 }
 
-// Ensure home-feature is above footer regardless of local stacking contexts
-if (isHomePage()) {
-    const feature = document.querySelector('.home-feature');
-    if (feature && feature.parentNode !== document.body) {
-        document.body.appendChild(feature);
-    }
-    if (feature) {
-        feature.style.zIndex = '999';
-        feature.style.pointerEvents = 'auto';
-        feature.style.position = feature.style.position || 'fixed';
-    }
-}
+// Home feature is now positioned within the video container, no need to move it
 
 // Initialize constellation info star click handler
 function initConstellationInfoStar() {
     const canvas = document.getElementById('constellation-info-star');
     if (!canvas) return;
+    
+    // Show the constellation info star since constellation loaded successfully
+    canvas.style.display = 'block';
     
     const ctx = canvas.getContext('2d');
     const size = canvas.width;
@@ -352,5 +362,5 @@ initImage();
 initHeaderImageCaption();
 initEventBinding();
 runMisc();
-initConstellationInfoStar();
+// initConstellationInfoStar() is now called conditionally when constellation loads successfully
 BlogHeader.init();
